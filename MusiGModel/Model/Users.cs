@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace MusiGModel.Model
+namespace MusiGModel
 {
     public class User
     {
@@ -12,11 +12,11 @@ namespace MusiGModel.Model
         }
 
         public int UserId { get; set; }
-        public string Forname { get; set; }
+        public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string UserName { get; set; }
 
-        public virtual ICollection UserPlaylists { get; set; }
-        public virtual ICollection UserAccounts { get; set; }
+        public virtual ICollection<UserPlaylist> UserPlaylists { get; set; }
+        public virtual ICollection<UserAccount> UserAccounts { get; set; }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace MusiGModel.Model
+namespace MusiGModel
 {
-    internal class Song
+    public class Song
     {
         public int SongId { get; set; }
         public string Title { get; set; }

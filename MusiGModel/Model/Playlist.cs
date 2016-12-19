@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace MusiGModel.Model
+namespace MusiGModel
 {
-    internal class Playlist
+    public class Playlist
     {
         public Playlist()
         {
@@ -14,6 +14,6 @@ namespace MusiGModel.Model
         public int SongId { get; set; }
 
 
-        public virtual ICollection Songs { get; set; }
+        public virtual ICollection<Song> Songs { get; set; }
     }
 }

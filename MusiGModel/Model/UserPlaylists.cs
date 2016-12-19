@@ -1,6 +1,6 @@
-﻿namespace MusiGModel.Model
+﻿namespace MusiGModel
 {
-    internal class UserPlaylist
+    public class UserPlaylist
     {
         public int UserPlaylistId { get; set; }
         public int UserId { get; set; }

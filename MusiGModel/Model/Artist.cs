@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace MusiGModel.Model
+namespace MusiGModel
 {
     public class Artist
     {
@@ -13,6 +13,6 @@ namespace MusiGModel.Model
         public int ArtistId { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection Songs { get; set; }
+        public virtual ICollection<Song> Songs { get; set; }
     }
 }

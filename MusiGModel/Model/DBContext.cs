@@ -1,4 +1,4 @@
-namespace MusiGModel.Model
+namespace MusiGModel
 {
     using System.Data.Entity;
 

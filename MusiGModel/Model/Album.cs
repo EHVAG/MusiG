@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MusiGModel.Model
+namespace MusiGModel
 {
-    internal class Album
+    public class Album
     {
         public Album()
         {
@@ -16,6 +16,6 @@ namespace MusiGModel.Model
         public Artist ArtistId { get; set; }
         public DateTime ReleaseDate { get; set; }
 
-        public virtual ICollection Songs { get; set; }
+        public virtual ICollection<Song> Songs { get; set; }
     }
 }
