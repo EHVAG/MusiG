@@ -19,5 +19,12 @@ namespace MusiGModel
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
 
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Album> Album { get; set; }
+        public virtual DbSet<Playlist> UsPlaylisters { get; set; }
+        public virtual DbSet<Song> Song { get; set; }
+        public virtual DbSet<Source> Source { get; set; }
+        public virtual DbSet<UserAccount> UserAccount { get; set; }
+        public virtual DbSet<UserPlaylist> UserPlaylist { get; set; }
+        public virtual DbSet<User> User { get; set; }
     }
 }

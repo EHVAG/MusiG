@@ -56,7 +56,7 @@
     <Compile Include="Model\Song.cs" />
     <Compile Include="Model\Source.cs" />
     <Compile Include="Model\UserAccount.cs" />
-    <Compile Include="Model\UserPlaylists.cs" />
+    <Compile Include="Model\UserPlaylist.cs" />
     <Compile Include="Model\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
