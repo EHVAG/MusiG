@@ -5,18 +5,9 @@ import LiveFeedSubs from './LiveFeedSubs';
 export default class Layout extends React.Component {
     render() {
         return (
-            <div>
-              <div>
-                <SideNav/>
-                </div>
-                <div class="main">
-                    <div class="container-fluid">
-                          <div id="LiveFeedSubs">
-                            <LiveFeedSubs subscriptions={data} />
-                          </div>
-                    </div>
-                </div>
-            </div>
+              <div id="LiveFeedSubs">
+                 <LiveFeedSubs subscriptions={data} />
+              </div>
         );
     }
 }
