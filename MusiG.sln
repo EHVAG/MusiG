@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusiGModel", "MusiGModel\MusiGModel.csproj", "{995F0908-5384-4A43-91AF-B833B35D309D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusiGServer", "MusiGServer\MusiGServer\MusiGServer.csproj", "{DCEAFCA0-E6D6-41DE-B603-65DCC5C591AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatsHelix.Charizard", "StatsHelix.Charizard\StatsHelix.Charizard\StatsHelix.Charizard.csproj", "{579BF5B7-C359-4543-9D74-9C57E9A82B1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActuallyWorkingWebSockets", "StatsHelix.Charizard\ActuallyWorkingWebSockets\ActuallyWorkingWebSockets\ActuallyWorkingWebSockets.csproj", "{B099DD77-A799-43B7-9E59-EB769309290D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{995F0908-5384-4A43-91AF-B833B35D309D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{995F0908-5384-4A43-91AF-B833B35D309D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{995F0908-5384-4A43-91AF-B833B35D309D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCEAFCA0-E6D6-41DE-B603-65DCC5C591AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCEAFCA0-E6D6-41DE-B603-65DCC5C591AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCEAFCA0-E6D6-41DE-B603-65DCC5C591AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCEAFCA0-E6D6-41DE-B603-65DCC5C591AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{579BF5B7-C359-4543-9D74-9C57E9A82B1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{579BF5B7-C359-4543-9D74-9C57E9A82B1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{579BF5B7-C359-4543-9D74-9C57E9A82B1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{579BF5B7-C359-4543-9D74-9C57E9A82B1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B099DD77-A799-43B7-9E59-EB769309290D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B099DD77-A799-43B7-9E59-EB769309290D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B099DD77-A799-43B7-9E59-EB769309290D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B099DD77-A799-43B7-9E59-EB769309290D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,6 +5,9 @@
         "jsx-a11y",
         "import"
     ],
+    "rules": {
+        "linebreak-style": ["error", "windows"]
+    },
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
