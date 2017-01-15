@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace MusiGModel
+namespace EHVAG.MusiGModel
 {
     public class Artist
     {

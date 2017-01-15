@@ -1,4 +1,4 @@
-namespace MusiGModel
+namespace EHVAG.MusiGModel
 {
     using System.Data.Entity;
 

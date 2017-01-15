@@ -6,7 +6,8 @@
         "import"
     ],
     "rules": {
-        "linebreak-style": ["error", "windows"]
+        "linebreak-style": ["error", "windows"],
+         "react/no-unknown-property": "off"
     },
     "parserOptions": {
         "ecmaFeatures": {

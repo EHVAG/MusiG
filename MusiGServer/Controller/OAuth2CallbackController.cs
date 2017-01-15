@@ -2,7 +2,7 @@
 using static StatsHelix.Charizard.HttpResponse;
 using System.Threading.Tasks;
 
-namespace MusiGServer.Controller
+namespace EHVAG.MusiGServer.Controller
 {
     [Controller]
     class OAuth2CallbackController

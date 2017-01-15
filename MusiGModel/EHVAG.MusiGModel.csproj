@@ -7,8 +7,8 @@
     <ProjectGuid>{995F0908-5384-4A43-91AF-B833B35D309D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MusiGModel</RootNamespace>
-    <AssemblyName>MusiGModel</AssemblyName>
+    <RootNamespace>EHVAG.MusiGModel</RootNamespace>
+    <AssemblyName>EHVAG.MusiGModel</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Model\Album.cs" />
     <Compile Include="Model\Artist.cs" />
+    <Compile Include="Model\AuthScheme.cs" />
     <Compile Include="Model\DBContext.cs" />
     <Compile Include="Model\Playlist.cs" />
     <Compile Include="Model\Song.cs" />

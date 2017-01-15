@@ -1,4 +1,4 @@
-var Data = {
+var data = {
     "items": [{
             "kind": "youtube#subscription",
             "etag": "\"gMxXHe-zinKdE9lTnzKu8vjcmDI/tAu96qhRMAYBNmZj2mRCVdqdFoM\"",

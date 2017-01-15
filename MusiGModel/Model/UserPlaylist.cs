@@ -1,4 +1,4 @@
-﻿namespace MusiGModel
+﻿namespace EHVAG.MusiGModel
 {
     public class UserPlaylist
     {

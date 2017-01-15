@@ -1,7 +1,7 @@
 ﻿using StatsHelix.Charizard;
 using System.Net;
 
-namespace MusiGServer
+namespace EHVAG.MusiGServer
 {
     class Program
     {

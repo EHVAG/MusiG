@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MusiGModel
+namespace EHVAG.MusiGModel
 {
     public class Song
     {

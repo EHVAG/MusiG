@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusiGServer.Controller
+namespace EHVAG.MusiGServer
 {
-    interface IConnectService
+    enum AuthType
     {
+        OAuth2,
+        OpenId
     }
 }
