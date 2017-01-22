@@ -1,4 +1,5 @@
 import React from 'react';
+import ClassNames from 'classnames';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -13,16 +14,24 @@ class SearchBar extends React.Component {
   }
 
   render() {
+    const SeachBarStyle = ClassNames('searchbar', 'form-control', 'text-center', 'col-lg-12');
+
     return (
-      <form>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={this.props.filterText}
-          ref={(input) => this.filterTextInput = input}
-          onChange={this.handleChange}
-        />
-      </form>
+      <div class="row">
+        <div class="form-group has-feedback searchbar-wrapper">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={this.props.filterText}
+            ref={input => this.filterTextInput = input}
+            onChange={this.handleChange}
+            class={SeachBarStyle}
+          />
+          <span class="glyphicon glyphicon-search form-control-feedback" />
+        </div>
+      </div>
     );
   }
 }
+
+export default SearchBar;

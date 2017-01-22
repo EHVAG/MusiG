@@ -12,15 +12,20 @@ class FilterableChannelPage extends React.Component {
     this.handleUserInput = this.handleUserInput.bind(this);
   }
 
-  handleUserInput(filterText) {
+  handleUserInput(filter) {
     this.setState({
-      filterText: filterText
+      filterText: filter,
     });
   }
 
   render() {
     return (
       <div class="container">
+        <SearchBar
+          filterText={this.state.filterText}
+          onUserInput={this.handleUserInput}
+        />
+
         <ChannelPage
           channels={this.props.channels.items}
           filterText={this.state.filterText}
