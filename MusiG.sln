@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHVAG.MusiGModel", "MusiGModel\EHVAG.MusiGModel.csproj", "{995F0908-5384-4A43-91AF-B833B35D309D}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActuallyWorkingWebSockets", "StatsHelix.Charizard\ActuallyWorkingWebSockets\ActuallyWorkingWebSockets\ActuallyWorkingWebSockets.csproj", "{B099DD77-A799-43B7-9E59-EB769309290D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHVAG.MusiGServer", "MusiGServer\EHVAG.MusiGServer.csproj", "{DCEAFCA0-E6D6-41DE-B603-65DCC5C591AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHVAG.MusiGServer.Tests", "EHVAG.MusiGServer.Tests\EHVAG.MusiGServer.Tests.csproj", "{D09B1F64-49FA-4DFE-99A2-FF15C2852CCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{DCEAFCA0-E6D6-41DE-B603-65DCC5C591AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCEAFCA0-E6D6-41DE-B603-65DCC5C591AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCEAFCA0-E6D6-41DE-B603-65DCC5C591AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D09B1F64-49FA-4DFE-99A2-FF15C2852CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D09B1F64-49FA-4DFE-99A2-FF15C2852CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D09B1F64-49FA-4DFE-99A2-FF15C2852CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D09B1F64-49FA-4DFE-99A2-FF15C2852CCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

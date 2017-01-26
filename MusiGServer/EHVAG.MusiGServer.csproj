@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthType.cs" />
-    <Compile Include="Controller\ConnectServiceController.cs" />
+    <Compile Include="Controller\ChannelController.cs" />
     <Compile Include="Controller\IConnectService.cs" />
     <Compile Include="Controller\OAuth2CallbackController.cs" />
     <Compile Include="Controller\TestController.cs" />

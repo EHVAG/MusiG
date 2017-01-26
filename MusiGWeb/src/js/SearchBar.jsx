@@ -14,7 +14,7 @@ class SearchBar extends React.Component {
   }
 
   render() {
-    const SeachBarStyle = ClassNames('searchbar', 'form-control', 'text-center', 'col-lg-12');
+    const SeachBarStyle = ClassNames('searchbar', 'form-control', 'col-lg-12');
 
     return (
       <div class="row">
