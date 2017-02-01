@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EHVAG.MusiGModel
 {
-    public class AuthScheme
+    public class OAuth2Scheme
     {
         /// <summary>
         /// Determines whether the Google OAuth 2.0 endpoint returns an authorization code.

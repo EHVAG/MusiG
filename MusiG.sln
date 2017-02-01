@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActuallyWorkingWebSockets",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHVAG.MusiGServer", "MusiGServer\EHVAG.MusiGServer.csproj", "{DCEAFCA0-E6D6-41DE-B603-65DCC5C591AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHVAG.MusiGServer.Tests", "EHVAG.MusiGServer.Tests\EHVAG.MusiGServer.Tests.csproj", "{D09B1F64-49FA-4DFE-99A2-FF15C2852CCD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHVAG.MusiGServer.Tests", "MusiGTest\MusiGServer.Tests\EHVAG.MusiGServer.Tests.csproj", "{D09B1F64-49FA-4DFE-99A2-FF15C2852CCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

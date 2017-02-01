@@ -47,11 +47,11 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MusiGServer\EHVAG.MusiGServer.csproj">
+    <ProjectReference Include="..\..\MusiGServer\EHVAG.MusiGServer.csproj">
       <Project>{DCEAFCA0-E6D6-41DE-B603-65DCC5C591AC}</Project>
       <Name>EHVAG.MusiGServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\StatsHelix.Charizard\StatsHelix.Charizard\StatsHelix.Charizard.csproj">
+    <ProjectReference Include="..\..\StatsHelix.Charizard\StatsHelix.Charizard\StatsHelix.Charizard.csproj">
       <Project>{579BF5B7-C359-4543-9D74-9C57E9A82B1A}</Project>
       <Name>StatsHelix.Charizard</Name>
     </ProjectReference>
