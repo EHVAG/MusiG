@@ -4,14 +4,15 @@ using System.Collections.Generic;
 
 namespace EHVAG.MusiGModel
 {
-    public class Source
+    public class Channel
     {
-        public int SourceId { get; set; }
+        public int ChannelId { get; set; }
         public string Name { get; set; }
-        public int UserAccountId { get; set; }
+        public int ChannelAuthMethodId { get; set; }
         public string Description { get; set; }
         public string Link { get; set; }
 
-        public virtual ICollection<UserAccount> UserAccounts { get; set; } = new List<UserAccount>();
+
+        public virtual ChannelAuthMethod ChannelAuthMethod { get; set; }
     }
 }

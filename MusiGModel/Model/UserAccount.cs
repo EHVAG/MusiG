@@ -6,7 +6,7 @@
         public int SourceId { get; set; }
         public int UserId { get; set; }
 
-        public virtual Source Source { get; set; }
+        public virtual Channel Source { get; set; }
         public virtual User User { get; set; }
     }
 }

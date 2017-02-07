@@ -12,10 +12,10 @@ class ChannelItem extends React.Component {
     let channelActionText;
 
     if (this.props.channel.state === 0) {
-      channelActionUrl = `ConnectChannel/Add?channelId=${this.props.channel.id}`;
+      channelActionUrl = `http://localhost/Channel/Add?channelname=${this.props.channel.title}`;
       channelActionText = 'Verbinden!';
     } else if (this.props.channel.state === 1) {
-      channelActionUrl = `ConnectChannel/Remove?channelId=${this.props.channel.id}`;
+      channelActionUrl = `Channel/Remove?channelId=${this.props.channel.id}`;
       channelActionText = 'Entfernen!';
     } else {
       channelActionUrl = '#';

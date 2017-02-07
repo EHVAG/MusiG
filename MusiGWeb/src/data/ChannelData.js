@@ -4,7 +4,7 @@ const channelData = {
     title: 'YouTube',
     url: 'https://youtube.com',
     fontAwesomeIconClass: 'fa fa-youtube-square',
-    state: 3,
+    state: 0,
   },
   {
     id: 2,

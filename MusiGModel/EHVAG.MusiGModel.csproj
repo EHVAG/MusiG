@@ -84,14 +84,35 @@
     <Compile Include="Migrations\201702012019399_First MusiG migration.Designer.cs">
       <DependentUpon>201702012019399_First MusiG migration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702032122531_Added Auth-Methods for channels..cs" />
+    <Compile Include="Migrations\201702032122531_Added Auth-Methods for channels..Designer.cs">
+      <DependentUpon>201702032122531_Added Auth-Methods for channels..cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702032128019_Fixed relation between Channel and ChannelAuthMethod.cs" />
+    <Compile Include="Migrations\201702032128019_Fixed relation between Channel and ChannelAuthMethod.Designer.cs">
+      <DependentUpon>201702032128019_Fixed relation between Channel and ChannelAuthMethod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702041952318_Fixed More Things.cs" />
+    <Compile Include="Migrations\201702041952318_Fixed More Things.Designer.cs">
+      <DependentUpon>201702041952318_Fixed More Things.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702041959431_Delete User from Channel.cs" />
+    <Compile Include="Migrations\201702041959431_Delete User from Channel.Designer.cs">
+      <DependentUpon>201702041959431_Delete User from Channel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702042003382_Fixed error.cs" />
+    <Compile Include="Migrations\201702042003382_Fixed error.Designer.cs">
+      <DependentUpon>201702042003382_Fixed error.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Album.cs" />
     <Compile Include="Model\Artist.cs" />
-    <Compile Include="Model\AuthScheme.cs" />
+    <Compile Include="Model\ChannelAuthMethod.cs" />
+    <Compile Include="Model\oAuth2.cs" />
     <Compile Include="DBContext.cs" />
     <Compile Include="Model\Playlist.cs" />
     <Compile Include="Model\Song.cs" />
-    <Compile Include="Model\Source.cs" />
+    <Compile Include="Model\Channel.cs" />
     <Compile Include="Model\UserAccount.cs" />
     <Compile Include="Model\UserPlaylist.cs" />
     <Compile Include="Model\User.cs" />
@@ -106,6 +127,21 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201702012019399_First MusiG migration.resx">
       <DependentUpon>201702012019399_First MusiG migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702032122531_Added Auth-Methods for channels..resx">
+      <DependentUpon>201702032122531_Added Auth-Methods for channels..cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702032128019_Fixed relation between Channel and ChannelAuthMethod.resx">
+      <DependentUpon>201702032128019_Fixed relation between Channel and ChannelAuthMethod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702041952318_Fixed More Things.resx">
+      <DependentUpon>201702041952318_Fixed More Things.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702041959431_Delete User from Channel.resx">
+      <DependentUpon>201702041959431_Delete User from Channel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702042003382_Fixed error.resx">
+      <DependentUpon>201702042003382_Fixed error.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

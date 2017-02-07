@@ -22,9 +22,10 @@ namespace EHVAG.MusiGModel
         public virtual DbSet<Artist> Artist { get; set; }
         public virtual DbSet<Playlist> Playlist { get; set; }
         public virtual DbSet<Song> Song { get; set; }
-        public virtual DbSet<Source> Source { get; set; }
+        public virtual DbSet<Channel> Channel { get; set; }
         public virtual DbSet<UserAccount> UserAccount { get; set; }
         public virtual DbSet<UserPlaylist> UserPlaylist { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<ChannelAuthMethod> ChannelAuthMethod { get; set; }
     }
 }

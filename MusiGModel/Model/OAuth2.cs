@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace EHVAG.MusiGModel
 {
-    public class OAuth2Scheme
+    public class oAuth2 : ChannelAuthMethod
     {
         /// <summary>
         /// Determines whether the Google OAuth 2.0 endpoint returns an authorization code.
@@ -71,6 +69,6 @@ namespace EHVAG.MusiGModel
         /// </summary>
         public string IncludeGrantedScopes { get; set; }
 
-        public virtual ICollection<UserAccount> UserAccounts { get; set; } = new List<UserAccount>();
+        
     }
 }
