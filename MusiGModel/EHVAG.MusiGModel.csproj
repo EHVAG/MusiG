@@ -104,16 +104,30 @@
     <Compile Include="Migrations\201702042003382_Fixed error.Designer.cs">
       <DependentUpon>201702042003382_Fixed error.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702111530583_Auth not needed.cs" />
+    <Compile Include="Migrations\201702111530583_Auth not needed.Designer.cs">
+      <DependentUpon>201702111530583_Auth not needed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702111536034_MyMistake.cs" />
+    <Compile Include="Migrations\201702111536034_MyMistake.Designer.cs">
+      <DependentUpon>201702111536034_MyMistake.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702120922537_Fixing Bugs.cs" />
+    <Compile Include="Migrations\201702120922537_Fixing Bugs.Designer.cs">
+      <DependentUpon>201702120922537_Fixing Bugs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702121050103_Added oAuth2Tokens.cs" />
+    <Compile Include="Migrations\201702121050103_Added oAuth2Tokens.Designer.cs">
+      <DependentUpon>201702121050103_Added oAuth2Tokens.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Album.cs" />
     <Compile Include="Model\Artist.cs" />
-    <Compile Include="Model\ChannelAuthMethod.cs" />
-    <Compile Include="Model\oAuth2.cs" />
     <Compile Include="DBContext.cs" />
+    <Compile Include="Model\oAuth2Token.cs" />
     <Compile Include="Model\Playlist.cs" />
     <Compile Include="Model\Song.cs" />
     <Compile Include="Model\Channel.cs" />
-    <Compile Include="Model\UserAccount.cs" />
     <Compile Include="Model\UserPlaylist.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -142,6 +156,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702042003382_Fixed error.resx">
       <DependentUpon>201702042003382_Fixed error.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702111530583_Auth not needed.resx">
+      <DependentUpon>201702111530583_Auth not needed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702111536034_MyMistake.resx">
+      <DependentUpon>201702111536034_MyMistake.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702120922537_Fixing Bugs.resx">
+      <DependentUpon>201702120922537_Fixing Bugs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702121050103_Added oAuth2Tokens.resx">
+      <DependentUpon>201702121050103_Added oAuth2Tokens.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

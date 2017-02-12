@@ -11,6 +11,6 @@ namespace EHVAG.MusiGModel
         public string UserName { get; set; }
 
         public virtual ICollection<UserPlaylist> UserPlaylists { get; set; } = new List<UserPlaylist>();
-        public virtual ICollection<UserAccount> UserAccounts { get; set; } = new List<UserAccount>();
+        public virtual ICollection<Channel> Channels { get; set; } = new List<Channel>();
     }
 }

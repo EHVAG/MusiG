@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Web;
 
 namespace EHVAG.MusiGServer.Controller
 {
@@ -17,7 +20,7 @@ namespace EHVAG.MusiGServer.Controller
         public async Task<HttpResponse> Add(string channelName)
         {
             if (channelName == string.Empty)
-                return HttpResponse.Data(Encoding.Unicode.GetBytes("Channel required"), HttpStatus.BadRequest);
+                return HttpResponse.String("Channel required", HttpStatus.BadRequest, ContentType.Plaintext);
 
             using (var context = new DBContext())
             {
@@ -42,19 +45,20 @@ namespace EHVAG.MusiGServer.Controller
                 try
                 {
                     JObject clientSecrets = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
-                    var auth_uri = (string)clientSecrets["web"]["auth_uri"];
-                    var client_id = (string)clientSecrets["web"]["client_id"];
-                    var redirect_uris = (string)clientSecrets["web"]["redirect_uris"][0]; // Just select the first one
-                    var scope = (string)clientSecrets["web"]["scope"];
-                    var response = (string)clientSecrets["web"]["response"];
-                    var access_type = (string)clientSecrets["web"]["access_type"];
+                    var authUri = (string)clientSecrets["web"]["auth_uri"];
 
-                    return auth_uri + "?" +
-                            "client_id=" + client_id + "&" +
-                            "redirect_uri=" + redirect_uris + "&" +
-                            "scope=" + scope + "&" +
-                            "response_type=" + response + "&" +
-                            "access_type=" + access_type;
+                    NameValueCollection queryString = new NameValueCollection();
+                    queryString.Add("client_id", (string)clientSecrets["web"]["client_id"]);
+                    queryString.Add("redirect_uris", (string)clientSecrets["web"]["redirect_uris"][0]);
+                    queryString.Add("scope", (string)clientSecrets["web"]["scope"]);
+                    queryString.Add("response", (string)clientSecrets["web"]["response"]);
+                    queryString.Add("access_type", (string)clientSecrets["web"]["access_type"]);
+
+                    var array = (from key in queryString.AllKeys
+                                 from value in queryString.GetValues(key)
+                                 select string.Format("{0}={1}", HttpUtility.UrlEncode(key), HttpUtility.UrlEncode(value))).ToArray();
+
+                    return authUri += string.Join("&", array);
                 }
                 catch (Exception exep)
                 {
