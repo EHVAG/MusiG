@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 namespace EHVAG.MusiGServer.Controller
 {
     [Controller]
-    public class lel
+    class LiveFeedController
     {
-        public HttpResponse yolo()
+        // TODO again. How to Identify a user???
+        public HttpResponse GetUserLiveFeed(HttpRequest req)
         {
-            return HttpResponse.String("test");
+            var cookie = req.GetCookie();
         }
     }
 }

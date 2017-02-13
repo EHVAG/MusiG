@@ -16,6 +16,8 @@ namespace EHVAG.MusiGServer.Controller
     [Controller]
     public class oAuth2CallbackController
     {
+        // Security issue. Everybody can access this and potentialy flood the database
+        // Is it enough if we validate the sessions via e.g cookies?
         public async Task<HttpResponse> Response(HttpRequest request)
         {
             var queryStringColl = System.Web.HttpUtility.ParseQueryString(request.Querystring.ToString());

@@ -10,7 +10,6 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Web;
 
 namespace EHVAG.MusiGServer.Controller
 {
@@ -20,7 +19,7 @@ namespace EHVAG.MusiGServer.Controller
         public async Task<HttpResponse> Add(string channelName)
         {
             if (channelName == string.Empty)
-                return HttpResponse.String("Channel required", HttpStatus.BadRequest, ContentType.Plaintext);
+                return Redirect("/ChannelNotFound.html");
 
             using (var context = new DBContext())
             {
@@ -56,13 +55,13 @@ namespace EHVAG.MusiGServer.Controller
 
                     var array = (from key in queryString.AllKeys
                                  from value in queryString.GetValues(key)
-                                 select string.Format("{0}={1}", HttpUtility.UrlEncode(key), HttpUtility.UrlEncode(value))).ToArray();
+                                 select string.Format("{0}={1}", System.Web.HttpUtility.UrlEncode(key), System.Web.HttpUtility.UrlEncode(value))).ToArray();
 
                     return authUri += string.Join("&", array);
                 }
                 catch (Exception exep)
                 {
-                    Console.WriteLine(exep.Message);
+                    Console.WriteLine("{0} - {1}", DateTimeOffset.Now, exep.Message);
                     return (@"\InternalServerError.html");
                 }
             }
