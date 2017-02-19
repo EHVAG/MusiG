@@ -1,11 +1,9 @@
 ﻿using EHVAG.MusiGModel;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using StatsHelix.Charizard;
 using System.Collections.Generic;
 using static StatsHelix.Charizard.HttpResponse;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -16,90 +14,68 @@ namespace EHVAG.MusiGServer.Controller
     [Controller]
     public class oAuth2CallbackController
     {
-        // Security issue. Everybody can access this and potentialy flood the database
-        // Is it enough if we validate the sessions via e.g cookies?
-        public async Task<HttpResponse> Response(HttpRequest request)
+        // TODO: Check who is calling this endpoint. Cookies?
+        // TODO: What if we "error" as parameter. This won't work.
+        public async Task<HttpResponse> YouTubeResponse(string code = null, string error = null)
         {
-            var queryStringColl = System.Web.HttpUtility.ParseQueryString(request.Querystring.ToString());
+            // Check for bad requests
+            if (System.String.IsNullOrEmpty(code) && System.String.IsNullOrEmpty(error))
+                return Redirect(StaticPages.BadRequest);
 
-            //TODO: How to tell apart if the request came from YouTube or else where?
-            if (queryStringColl.Keys[0] == "code")
-            {
-                var success = await GetYouTubeAccessToken(queryStringColl.GetValues("code")[0].ToString());
-                return HttpResponse.String("success");
-            }
-            else
-            {
-                //User wont give us access :(
-                return HttpResponse.String("You shall not pass");
-            }
-        }
+            if (!string.IsNullOrEmpty(error))
+                return String("Fells bad man");
 
-        private async Task<bool> GetYouTubeAccessToken(string authCode)
-        {
-            using (StreamReader reader = File.OpenText(@"config\GoogleAPIClientSecret.json"))
+            dynamic responseJson;
+            using (var client = new HttpClient())
             {
-                JObject clientSecrets = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
-                var token_uri = (string)clientSecrets["web"]["token_uri"];
-
-                using (var client = new HttpClient())
+                var values = new Dictionary<string, string>
                 {
-                    var values = new Dictionary<string, string>
-                        {
-                           { "code", authCode},
-                           { "client_id", (string)clientSecrets["web"]["client_id"] },
-                           { "client_secret", (string)clientSecrets["web"]["client_secret"] },
-                           { "redirect_uri", (string)clientSecrets["web"]["redirect_uris"][0] },
-                           { "grant_type", (string)clientSecrets["web"]["grant_type"] }
-                        };
+                    { "code", code},
+                    { "client_id", Program.googleClientSecrets.web.client_id.ToString()},
+                    { "client_secret", Program.googleClientSecrets.web.client_secret.ToString() },
+                    { "redirect_uri", Program.googleClientSecrets.web.redirect_uris[0].ToString() },
+                    { "grant_type", Program.googleClientSecrets.web.grant_type.ToString() }
+                };
 
-                    var content = new FormUrlEncodedContent(values);
-
-                    var response = await client.PostAsync(new Uri(token_uri), content);
-
-                    var responseString = await response.Content.ReadAsStringAsync();
-
-                    //handle response
-                    var responseJson = JObject.Parse(responseString);
-                    if (responseJson["error"] == null)
-                    {
-                        using (var context = new DBContext())
-                        {
-                            var token = new oAuth2Token();
-                            token.Channel = await context.Channel.Where(c => c.Name == "YouTube").FirstOrDefaultAsync();
-                            // TODO: We dont know the user yet
-                            // token.UserId =
-                            token.AccessToken = (string)responseJson["access_token"];
-                            token.TokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(Convert.ToDouble((string)responseJson["expires_in"]));
-                            token.TokenType = (string)responseJson["token_type"];
-                            token.RefreshToken = (string)responseJson["refresh_token"];
-
-                            await SaveoAuth2TokenAsync(token);
-
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
+                // Exchange AuthCode for AccessToken and RefreshToken
+                var response = await client.PostAsync(Program.googleClientSecrets.web.token_uri.ToString(), new FormUrlEncodedContent(values));
+                responseJson = JObject.Parse(await response.Content.ReadAsStringAsync());
             }
+
+            // Handle response
+            if (responseJson.error == null)
+            {
+                var token = new OAuth2Token123();
+                using (var context = new DBContext())
+                {
+
+                    //token.Channel = await context.Channel.Where(c => c.Name == "YouTube").FirstOrDefaultAsync();
+
+                    // TODO: We don't know the user yet. Add it later.
+                    // token.UserId =
+                    token.AccessToken = responseJson.access_token;
+                    token.TokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(Convert.ToDouble(responseJson.expires_in));
+                    token.TokenType = responseJson.token_type;
+                    token.RefreshToken = responseJson.refresh_token;
+
+                    //await SaveoAuth2TokenAsync(token);
+
+                    context.OAuth2Token.Add(token);
+                    await context.SaveChangesAsync();
+                }
+                // TODO: What do we do if this succeeds? Redirect? Where?
+
+            }
+
+            // If we get here; Something went wrong. Present answer from the server
+            return Json(responseJson, HttpStatus.InternalServerError);
         }
 
-        private async Task SaveoAuth2TokenAsync(oAuth2Token token)
+        private async Task SaveoAuth2TokenAsync(OAuth2Token123 token)
         {
             using (var context = new DBContext())
             {
-                context.oAuth2Token.Add(token);
-                try
-                {
-                    await context.SaveChangesAsync();
-                }
-                catch (Exception exep)
-                {
-                    // TODO: Handle exceptions.
-                }
+
             }
         }
     }

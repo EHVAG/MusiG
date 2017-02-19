@@ -25,6 +25,6 @@ namespace EHVAG.MusiGModel
         public virtual DbSet<Channel> Channel { get; set; }
         public virtual DbSet<UserPlaylist> UserPlaylist { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<oAuth2Token> oAuth2Token { get; set; }
+        public virtual DbSet<OAuth2Token123> OAuth2Token { get; set; }
     }
 }

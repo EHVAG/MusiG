@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EHVAG.MusiGModel
 {
-    public class oAuth2Token
+    public class OAuth2Token123
     {
-        public int oAuth2TokenId { get; set; }
+        [Key]
+        public int OAuth2TokenId123 { get; set; }
         public int ChannelId { get; set; }
         public int UserId { get; set; }
         public string AccessToken { get; set; }

@@ -54,8 +54,8 @@
       <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.1.1.0\lib\netstandard1.1\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Npgsql, Version=3.2.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Npgsql.3.2.0\lib\net451\Npgsql.dll</HintPath>
+    <Reference Include="Npgsql, Version=3.2.1.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.3.2.1\lib\net451\Npgsql.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -120,11 +120,23 @@
     <Compile Include="Migrations\201702121050103_Added oAuth2Tokens.Designer.cs">
       <DependentUpon>201702121050103_Added oAuth2Tokens.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702191824158_Test.cs" />
+    <Compile Include="Migrations\201702191824158_Test.Designer.cs">
+      <DependentUpon>201702191824158_Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702191847397_Naming.cs" />
+    <Compile Include="Migrations\201702191847397_Naming.Designer.cs">
+      <DependentUpon>201702191847397_Naming.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702191854172_Test1.cs" />
+    <Compile Include="Migrations\201702191854172_Test1.Designer.cs">
+      <DependentUpon>201702191854172_Test1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Album.cs" />
     <Compile Include="Model\Artist.cs" />
     <Compile Include="DBContext.cs" />
-    <Compile Include="Model\oAuth2Token.cs" />
+    <Compile Include="Model\OAuth2Token.cs" />
     <Compile Include="Model\Playlist.cs" />
     <Compile Include="Model\Song.cs" />
     <Compile Include="Model\Channel.cs" />
@@ -168,6 +180,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702121050103_Added oAuth2Tokens.resx">
       <DependentUpon>201702121050103_Added oAuth2Tokens.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702191824158_Test.resx">
+      <DependentUpon>201702191824158_Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702191847397_Naming.resx">
+      <DependentUpon>201702191847397_Naming.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702191854172_Test1.resx">
+      <DependentUpon>201702191854172_Test1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

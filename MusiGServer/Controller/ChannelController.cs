@@ -1,10 +1,6 @@
 ﻿using StatsHelix.Charizard;
-using System.Text;
-using EHVAG.MusiGModel;
 using static StatsHelix.Charizard.HttpResponse;
 using System;
-using System.Data.Entity;
-using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
@@ -16,55 +12,32 @@ namespace EHVAG.MusiGServer.Controller
     [Controller]
     public class ChannelController
     {
-        public async Task<HttpResponse> Add(string channelName)
+        public HttpResponse Add(string channelName)
         {
-            if (channelName == string.Empty)
-                return Redirect("/ChannelNotFound.html");
-
-            using (var context = new DBContext())
+            switch (channelName)
             {
-                var channelExists = await context.Channel.AnyAsync(c => c.Name == channelName);
-
-                if (channelExists)
-                {
-                    switch (channelName)
-                    {
-                        case "YouTube": return Redirect(GetYouTubeAuthUri());
-                        case "SoundCloud": return Redirect("");
-                    }
-                }
+                case "YouTube": return Redirect(GetYouTubeAuthUri());
+                case "SoundCloud": return Redirect("");
+                default: return Redirect(StaticPages.BadRequest);
             }
-            return Redirect("/ChannelNotFound.html");
+        }
+
+        // https://developers.google.com/identity/protocols/OAuth2InstalledApp#tokenrevoke
+        public HttpResponse Remove(string channelName, string userId)
+        {
+            switch (channelName)
+            {
+                case "YouTube": return Redirect(GetYouTubeAuthUri());
+                case "SoundCloud": return Redirect("");
+                default: return Redirect(StaticPages.BadRequest);
+            }
         }
 
         public string GetYouTubeAuthUri()
         {
-            using (StreamReader reader = File.OpenText(@"config\GoogleAPIClientSecret.json"))
-            {
-                try
-                {
-                    JObject clientSecrets = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
-                    var authUri = (string)clientSecrets["web"]["auth_uri"];
-
-                    NameValueCollection queryString = new NameValueCollection();
-                    queryString.Add("client_id", (string)clientSecrets["web"]["client_id"]);
-                    queryString.Add("redirect_uris", (string)clientSecrets["web"]["redirect_uris"][0]);
-                    queryString.Add("scope", (string)clientSecrets["web"]["scope"]);
-                    queryString.Add("response", (string)clientSecrets["web"]["response"]);
-                    queryString.Add("access_type", (string)clientSecrets["web"]["access_type"]);
-
-                    var array = (from key in queryString.AllKeys
-                                 from value in queryString.GetValues(key)
-                                 select string.Format("{0}={1}", System.Web.HttpUtility.UrlEncode(key), System.Web.HttpUtility.UrlEncode(value))).ToArray();
-
-                    return authUri += string.Join("&", array);
-                }
-                catch (Exception exep)
-                {
-                    Console.WriteLine("{0} - {1}", DateTimeOffset.Now, exep.Message);
-                    return (@"\InternalServerError.html");
-                }
-            }
+            Func<string, string> ue = System.Web.HttpUtility.UrlEncode;
+            dynamic web = Program.googleClientSecrets.web;
+            return $@"{web.auth_uri}?scope={ue(web.scope.ToString())}&access_type={ue(web.access_type.ToString())}&redirect_uri={ue(web.redirect_uris[0].ToString())}&response_type={ue(web.response.ToString())}&client_id={ ue(web.client_id.ToString())}";
         }
     }
 }

@@ -1,9 +1,4 @@
 ﻿using StatsHelix.Charizard;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EHVAG.MusiGServer.Controller
 {
@@ -11,9 +6,9 @@ namespace EHVAG.MusiGServer.Controller
     class LiveFeedController
     {
         // TODO again. How to Identify a user???
-        public HttpResponse GetUserLiveFeed(HttpRequest req)
-        {
-            var cookie = req.GetCookie();
-        }
+        //public HttpResponse GetUserLiveFeed(HttpRequest req)
+        //{
+        //    HttpResponse.Redirect().SetCookie();
+        //}
     }
 }
