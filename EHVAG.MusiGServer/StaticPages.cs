@@ -10,5 +10,6 @@ namespace EHVAG.MusiGServer
     {
         public static string InternalServerError { get { return @"\InternalServerError.html"; } }
         public static string BadRequest { get { return @"\BadRequest.html"; } }
+        public static string AlreadyAuthenticated { get { return @"\ChannelAlreadyAuthenticated.html"; } }
     }
 }

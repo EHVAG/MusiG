@@ -22,6 +22,7 @@ namespace EHVAG.MusiGServer.Controller
             if (System.String.IsNullOrEmpty(code) && System.String.IsNullOrEmpty(error))
                 return Redirect(StaticPages.BadRequest);
 
+            // User gave us no access
             if (!string.IsNullOrEmpty(error))
                 return String("Fells bad man");
 
@@ -45,30 +46,47 @@ namespace EHVAG.MusiGServer.Controller
             // Handle response
             if (responseJson.error == null)
             {
-                var token = new OAuth2Token();
-                using (var context = new MusiGDBContext())
+                // "Design problem" where to get the Channel entity and User entity for the method call. 
+                // We need two database lookups. Or one if we use a join.
+                // Do i have better design options? I want to validate if the user already has the channel authenticated.
+                // This could be the case if you call the controller manually.
+                // The call should be the same for all channels with OAuth. So i created a method. DRY.
+                if (!OAuth2TokenExists("YouTube", 123456))
                 {
+                    var token = new OAuth2Token();
+                    using (var context = new MusiGDBContext())
+                    {
+                        token.Channel = await context.Channel.Where(c => c.Name == "YouTube").FirstOrDefaultAsync();
 
-                    //token.Channel = await context.Channel.Where(c => c.Name == "YouTube").FirstOrDefaultAsync();
+                        // TODO: We don't know the user yet. Add it later.
+                        token.UserId = 1;
+                        token.AccessToken = responseJson.access_token;
+                        token.TokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(Convert.ToDouble(responseJson.expires_in));
+                        token.TokenType = responseJson.token_type;
+                        token.RefreshToken = responseJson.refresh_token;
 
-                    // TODO: We don't know the user yet. Add it later.
-                    // token.UserId =
-                    token.AccessToken = responseJson.access_token;
-                    token.TokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(Convert.ToDouble(responseJson.expires_in));
-                    token.TokenType = responseJson.token_type;
-                    token.RefreshToken = responseJson.refresh_token;
-
-                    //await SaveoAuth2TokenAsync(token);
-
-                    context.OAuth2Token.Add(token);
-                    await context.SaveChangesAsync();
+                        context.OAuth2Token.Add(token);
+                        await context.SaveChangesAsync();
+                    }
+                }
+                else
+                {
+                    // User has channel already authenticated.
+                    // Maybe present an usefull help page?
+                    Redirect(StaticPages.AlreadyAuthenticated);
                 }
                 // TODO: What do we do if this succeeds? Redirect? Where?
-
             }
-
             // If we get here; Something went wrong. Present answer from the server
             return Json(responseJson, HttpStatus.InternalServerError);
+        }
+
+        private async Task<bool> OAuth2TokenExists(Channel channel, User userId)
+        {
+            using (var context = new MusiGDBContext())
+            {
+                return await context.OAuth2Token.AnyAsync(c => c.Channel == channel && c.User == userId);
+            }
         }
     }
 }
