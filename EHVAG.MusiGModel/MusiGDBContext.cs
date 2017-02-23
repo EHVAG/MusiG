@@ -7,6 +7,7 @@
         public MusiGDBContext()
             : base("name=MusiGDev")
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<MusiGDBContext, EHVAG.MusiGModel.Migrations.Configuration>("MusiGDev"));
         }
 
         public virtual DbSet<User> User { get; set; }

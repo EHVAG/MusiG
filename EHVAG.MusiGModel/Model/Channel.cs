@@ -6,7 +6,7 @@ namespace EHVAG.MusiGModel
 {
     public class Channel
     {
-        public int ChannelId { get; set; }
+        public int Id { get; set; }
         [Required]
         [Index(IsUnique = true)]
         public string Name { get; set; }

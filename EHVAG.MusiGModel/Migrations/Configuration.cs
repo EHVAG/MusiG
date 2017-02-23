@@ -9,7 +9,7 @@ namespace EHVAG.MusiGModel.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(EHVAG.MusiGModel.MusiGDBContext context)

@@ -8,8 +8,8 @@ namespace EHVAG.MusiGServer
 {
     public static class StaticPages
     {
-        public static string InternalServerError { get { return @"\InternalServerError.html"; } }
-        public static string BadRequest { get { return @"\BadRequest.html"; } }
-        public static string AlreadyAuthenticated { get { return @"\ChannelAlreadyAuthenticated.html"; } }
+        public const string InternalServerError =  @"/InternalServerError.html";
+        public const string BadRequest = @"/BadRequest.html";
+        public const string AlreadyAuthenticated = @"/ChannelAlreadyAuthenticated.html";
     }
 }

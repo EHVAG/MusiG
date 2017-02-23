@@ -143,6 +143,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticPages.cs" />
+    <Compile Include="YouTubeClientSecrets.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
