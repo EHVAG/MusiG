@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class LiveFeedSubs extends React.Component {
+export default class ChannelSubscriptions extends React.Component {
     render() {
 
         return (

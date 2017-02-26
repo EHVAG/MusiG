@@ -1,34 +1,11 @@
-.sidenav {
-    height: 100%;
-    width: 90px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #111;
-    overflow-x: hidden;
-    overflow: hidden;
-    padding-top: 15px;
-}
-
-.sidenav a {
-    text-decoration: none;
-    color: #818181;
-    display: block;
-    padding: 36px 10px 0 10px;
-}
-
+/*
+  Implementing pseudo classes in kinda supid in react atm.
+  This stays here. Sorry.
+*/
 .sidenav a:hover, .offcanvas a:focus {
     color: #dfe0e6;
 }
 
-.main {
+.content {
     padding-left: 125px;
-}
-
-.bottom-left {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    margin-bottom: 5px;
 }

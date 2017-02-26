@@ -1,6 +1,6 @@
 import React from 'react';
 import ChannelPage from './ChannelPage';
-import SearchBar from '../SearchBar';
+import SearchBar from '../Shared/SearchBar';
 
 class FilterableChannelPage extends React.Component {
   constructor(props) {

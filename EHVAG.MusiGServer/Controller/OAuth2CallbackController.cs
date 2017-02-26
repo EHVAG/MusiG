@@ -48,7 +48,7 @@ namespace EHVAG.MusiGServer.Controller
                 var token = new OAuth2Token();
                 using (var context = new MusiGDBContext())
                 {
-                    if (await OAuth2TokenFind(context) != null)
+                    if (await OAuth2TokenFind(context) == null)
                     {
                         token.Channel = await context.Channel.Where(c => c.Name == "YouTube").FirstOrDefaultAsync();
                         // TODO: We don't know the user yet. Add it later.
@@ -64,7 +64,6 @@ namespace EHVAG.MusiGServer.Controller
                             {
                                 context.OAuth2Token.Add(token);
                                 await context.SaveChangesAsync();
-
                                 transaction.Commit();
                             }
                             catch (Exception excep)

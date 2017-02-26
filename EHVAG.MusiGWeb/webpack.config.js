@@ -5,7 +5,7 @@
   module.exports = {
     context: path.join(__dirname, 'src'),
     devtool: debug ? 'inline-sourcemap' : null,
-    entry: './js/client.js',
+    entry: './js/index.jsx',
     module: {
       loaders: [
         {
@@ -24,7 +24,7 @@
     },
     output: {
       path: `${__dirname}/src/`,
-      filename: 'client.min.js',
+      filename: 'index.min.js',
     },
     plugins: debug ? [] : [
       new webpack.optimize.DedupePlugin(),
