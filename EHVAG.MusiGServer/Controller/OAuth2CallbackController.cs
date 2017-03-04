@@ -22,6 +22,7 @@ namespace EHVAG.MusiGServer.Controller
                 return Redirect(StaticPages.BadRequest);
 
             // User gave us no access
+            // TODO: We need a redirect and message
             if (!string.IsNullOrEmpty(error))
                 return String("Fells bad man");
 
@@ -45,24 +46,28 @@ namespace EHVAG.MusiGServer.Controller
             // Handle response
             if (responseJson.error == null)
             {
-                var token = new OAuth2Token();
                 using (var context = new MusiGDBContext())
                 {
-                    if (await OAuth2TokenFind(context) == null)
+                    // Check if user already has a valid Token.
+                    // This could be the case if the user manually calls this controller.
+                    if (!await OAuth2TokenFind(context, 123, "YouTube"))
                     {
-                        token.Channel = await context.Channel.Where(c => c.Name == "YouTube").FirstOrDefaultAsync();
-                        // TODO: We don't know the user yet. Add it later.
-                        token.UserId = 1;
-                        token.AccessToken = responseJson.access_token;
-                        token.TokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(Convert.ToDouble(responseJson.expires_in));
-                        token.TokenType = responseJson.token_type;
-                        token.RefreshToken = responseJson.refresh_token;
-
                         using (var transaction = context.Database.BeginTransaction())
                         {
                             try
                             {
-                                context.OAuth2Token.Add(token);
+                                context.OAuth2Token.Add(
+                                    new OAuth2Token
+                                    {
+                                        Channel = await context.Channel.Where(c => c.Name == "YouTube").FirstOrDefaultAsync(),
+                                        // TODO: We don't know the user yet. Add it later.
+                                        UserId = 1,
+                                        AccessToken = responseJson.access_token,
+                                        TokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(Convert.ToDouble(responseJson.expires_in)),
+                                        TokenType = responseJson.token_type,
+                                        RefreshToken = responseJson.refresh_token,
+                                    }
+                                );
                                 await context.SaveChangesAsync();
                                 transaction.Commit();
                             }
@@ -80,19 +85,21 @@ namespace EHVAG.MusiGServer.Controller
                         Redirect(StaticPages.AlreadyAuthenticated);
                     }
                 }
-                // TODO: What do we do if this succeeds? Redirect? Where?
+                // TODO: Add Redirect with meaningfull message
+                Redirect("/channel");
             }
             // If we get here; Something went wrong. Present answer from the server. Google knows whats up.
             return Json(responseJson, HttpStatus.InternalServerError);
         }
 
-        private async Task<OAuth2Token> OAuth2TokenFind(MusiGDBContext context)
+        private async Task<bool> OAuth2TokenFind(MusiGDBContext context, int userId, string channelName)
         {
-            using (context)
-            {
-                // TODO: Add logic here.
-                return await context.OAuth2Token.SingleOrDefaultAsync();
-            }
+            return await (from token in context.OAuth2Token
+                          from channel in context.Channel
+                          where channel.Name == channelName
+                          && token.ChannelId == channel.Id
+                          && token.UserId == userId
+                          select token).AnyAsync();
         }
     }
 }

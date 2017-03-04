@@ -194,3 +194,14 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+# Do not include any files with client secrets etc.
+EHVAG.MusiGServer/Config/API
+
+# Vagrant stuff
+acceptance_config.yml
+boxes/*
+/.vagrant
+/website/.vagrant
+/website/build
+/vagrant-spec.config.rb

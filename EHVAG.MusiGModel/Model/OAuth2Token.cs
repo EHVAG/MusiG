@@ -6,10 +6,11 @@ namespace EHVAG.MusiGModel
 {
     public class OAuth2Token
     {
-        public int Id { get; set; }
-        [KeyAttribute]
+        [Key]
+        [Column(Order = 1)]
         public int ChannelId { get; set; }
-        [KeyAttribute]
+        [Key]
+        [Column(Order = 2)]
         public int UserId { get; set; }
         public string AccessToken { get; set; }
         public string TokenType { get; set; }

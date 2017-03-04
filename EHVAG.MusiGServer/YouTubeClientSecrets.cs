@@ -4,7 +4,7 @@ namespace EHVAG.MusiGServer
 {
     // TODO: Make it globally accessible
     // TODO: Add checks 
-    public class YouTubeClientSecret
+    public static class YouTubeClientSecret
     {
         [JsonProperty("client_id")]
         public int ClientId { get; set; }
