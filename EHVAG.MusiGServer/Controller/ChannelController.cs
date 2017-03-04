@@ -36,8 +36,7 @@ namespace EHVAG.MusiGServer.Controller
         public string GetYouTubeAuthUri()
         {
             Func<string, string> ue = System.Web.HttpUtility.UrlEncode;
-            dynamic web = Program.GoogleClientSecrets.web;
-            return $@"{web.auth_uri}?scope={ue(web.scope.ToString())}&access_type={ue(web.access_type.ToString())}&redirect_uri={ue(web.redirect_uris[0].ToString())}&response_type={ue(web.response.ToString())}&client_id={ ue(web.client_id.ToString())}";
+            return $@"{YouTubeClientSecret.AuthUri}?scope={ue(YouTubeClientSecret.Scope)}&access_type={ue(YouTubeClientSecret.AccessType)}&redirect_uri={ue(YouTubeClientSecret.RedirectUris)}&response_type={ue(YouTubeClientSecret.Response)}&client_id={ ue(YouTubeClientSecret.ClientId)}";
         }
     }
 }

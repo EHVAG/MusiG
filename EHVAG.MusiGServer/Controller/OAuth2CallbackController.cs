@@ -32,14 +32,14 @@ namespace EHVAG.MusiGServer.Controller
                 var values = new Dictionary<string, string>
                 {
                     { "code", code},
-                    { "client_id", Program.GoogleClientSecrets.web.client_id.ToString()},
-                    { "client_secret", Program.GoogleClientSecrets.web.client_secret.ToString() },
-                    { "redirect_uri", Program.GoogleClientSecrets.web.redirect_uris[0].ToString() },
-                    { "grant_type", Program.GoogleClientSecrets.web.grant_type.ToString() }
+                    { "client_id", YouTubeClientSecret.ClientId},
+                    { "client_secret", YouTubeClientSecret.ClientSecret},
+                    { "redirect_uri", YouTubeClientSecret.RedirectUris },
+                    { "grant_type", YouTubeClientSecret.GrantType }
                 };
 
                 // Exchange AuthCode for AccessToken and RefreshToken
-                var response = await client.PostAsync(Program.GoogleClientSecrets.web.token_uri.ToString(), new FormUrlEncodedContent(values));
+                var response = await client.PostAsync(YouTubeClientSecret.TokenUri, new FormUrlEncodedContent(values));
                 responseJson = JObject.Parse(await response.Content.ReadAsStringAsync());
             }
 

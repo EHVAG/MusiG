@@ -9,8 +9,6 @@ namespace EHVAG.MusiGServer
 {
     class Program
     {
-        public static readonly dynamic GoogleClientSecrets;
-
         static int Main(string[] args)
         {
             var server = new HttpServer(new IPEndPoint(IPAddress.Loopback, 80), typeof(Program).Assembly);
