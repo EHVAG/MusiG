@@ -196,7 +196,7 @@ FakesAssemblies/
 *.opt
 
 # Exclude all actual client/API configs here
-GoogleAPIClientSecret.json
+YouTubeClientSecret.json
 
 # Vagrant stuff
 acceptance_config.yml
