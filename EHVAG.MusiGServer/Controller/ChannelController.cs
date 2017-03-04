@@ -1,11 +1,6 @@
 ﻿using StatsHelix.Charizard;
-using static StatsHelix.Charizard.HttpResponse;
 using System;
-using System.IO;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using System.Collections.Specialized;
-using System.Linq;
+using static StatsHelix.Charizard.HttpResponse;
 
 namespace EHVAG.MusiGServer.Controller
 {

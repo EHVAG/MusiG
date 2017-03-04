@@ -1,6 +1,6 @@
 ﻿using StatsHelix.Charizard;
-using static StatsHelix.Charizard.HttpResponse;
 using System.Threading.Tasks;
+using static StatsHelix.Charizard.HttpResponse;
 
 namespace EHVAG.MusiGServer.Controller
 {
@@ -40,14 +40,14 @@ namespace EHVAG.MusiGServer.Controller
         }
 
         // POST /Test/Post HTTP/1.1
-        // POST-Body: 
+        // POST-Body:
         // { "Name": "Hello", "Id": 13 }
         public HttpResponse Post(FooType foo)
         {
             // Post bodies are JSON-encoded, so they are easy to generate
-            // from any client-side language. Deep objects are no problems, 
-            // anything that can be handled by Newtonsoft.Json is fine. 
-            // We don't support HTML-Forms, since they are - on our opionion - outdated. 
+            // from any client-side language. Deep objects are no problems,
+            // anything that can be handled by Newtonsoft.Json is fine.
+            // We don't support HTML-Forms, since they are - on our opionion - outdated.
             return String("foo.Name: " + foo.Name + " --- foo.Id: " + foo.Id);
         }
 

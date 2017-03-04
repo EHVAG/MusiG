@@ -1,13 +1,13 @@
 ﻿using EHVAG.MusiGModel;
 using Newtonsoft.Json.Linq;
 using StatsHelix.Charizard;
+using System;
 using System.Collections.Generic;
-using static StatsHelix.Charizard.HttpResponse;
 using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System;
+using static StatsHelix.Charizard.HttpResponse;
 
 namespace EHVAG.MusiGServer.Controller
 {

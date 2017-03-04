@@ -1,15 +1,15 @@
-﻿using StatsHelix.Charizard;
-using System.Net;
-using Newtonsoft.Json;
-using System.IO;
+﻿using Newtonsoft.Json;
+using StatsHelix.Charizard;
 using System;
+using System.IO;
+using System.Net;
 using System.Reflection;
 
 namespace EHVAG.MusiGServer
 {
-    class Program
+    internal class Program
     {
-        static int Main(string[] args)
+        private static int Main(string[] args)
         {
             var server = new HttpServer(new IPEndPoint(IPAddress.Loopback, 80), typeof(Program).Assembly);
 
