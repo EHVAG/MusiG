@@ -1,5 +1,5 @@
 import React from 'react';
-import SidebarNav from './SidebarNavigation/SidebarNav'
+import SidebarNav from '../SidebarNavigation/SidebarNav';
 
 export default class App extends React.Component {
     render() {

@@ -1,0 +1,11 @@
+/*
+  Implementing pseudo classes in kinda supid in react atm.
+  This stays here. Sorry.
+*/
+.sidenav a:hover, .offcanvas a:focus {
+    color: #dfe0e6;
+}
+
+.content {
+    padding-left: 125px;
+}
