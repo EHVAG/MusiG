@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import channelReducer from './Channels/ChannelReducer';
+
+// Import reducers here
+import channels from './ChannelPage/reducers/channelReducer';
 
 const rootReducer = combineReducers({
-    channels: channelReducer,
+    channels,
 });
 
 export default rootReducer;

@@ -11,8 +11,17 @@ namespace EHVAG.MusiGModel
         [Index(IsUnique = true)]
         public string Name { get; set; }
         public string Description { get; set; }
+        public string fontAwesomeIconClass { get; set; }
+        public ChannelState State { get; set; }
         public string Link { get; set; }
 
         public virtual ICollection<User> Users { get; set; } = new List<User>();
+    }
+
+    public enum ChannelState
+    {
+        Active,
+        Inactive,
+        CommingSoon
     }
 }

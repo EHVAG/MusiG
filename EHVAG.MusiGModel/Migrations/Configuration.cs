@@ -10,6 +10,7 @@ namespace EHVAG.MusiGModel.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(EHVAG.MusiGModel.MusiGDBContext context)
@@ -19,13 +20,14 @@ namespace EHVAG.MusiGModel.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            //context.Channel.Add(new Channel { Name = "YouTube", Description = "YouTube", fontAwesomeIconClass = "fa fa-youtube-square", Link = "", State = ChannelState.Active, });
+            //context.Channel.Add(new Channel { Name = "SoundCloud", Description = "YouTubeSoundCloud", fontAwesomeIconClass = "fa fa-soundcloud", Link = "", State = ChannelState.Active, });
+            //context.Channel.Add(new Channel { Name = "Spotify", Description = "Spotify", fontAwesomeIconClass = "fa fa-spotify", Link = "", State = ChannelState.Active, });
+            //context.Channel.Add(new Channel { Name = "USB", Description = "USB", fontAwesomeIconClass = "fa fa-usb", Link = "", State = ChannelState.CommingSoon, });
+            //context.Channel.Add(new Channel { Name = "Twitch", Description = "Twitch", fontAwesomeIconClass = "fa fa-twitch", Link = "", State = ChannelState.CommingSoon, });
+            //context.Channel.Add(new Channel { Name = "PayPal", Description = "PayPal", fontAwesomeIconClass = "fa fa-paypal", Link = "", State = ChannelState.CommingSoon, });
+            //context.SaveChanges();
+
         }
     }
 }

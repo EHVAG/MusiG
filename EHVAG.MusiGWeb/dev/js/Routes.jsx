@@ -1,13 +1,12 @@
 import React from 'react';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { Router, Route, IndexRoute, IndexLink, Link, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import App from './Shared/App';
 import Home from './Home/Home';
-import ChannelPageIndex from './Channels/ChannelPageIndex';
-import rootReducer from './Reducers';
+import ChannelPageIndex from './ChannelPage/index';
+import store from './store';
 
-const store = createStore(rootReducer);
+
 const routes =
   (<Provider store={store}>
     <Router history={hashHistory}>

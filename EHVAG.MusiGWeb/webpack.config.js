@@ -4,6 +4,11 @@
   module.exports = {
       context: __dirname,
       devtool: debug ? 'inline-sourcemap' : null,
+      devServer: {
+          headers: {
+              'Access-Control-Allow-Origin': '*',
+          },
+      },
       entry: './dev/js/index.jsx',
       module: {
           loaders: [{
