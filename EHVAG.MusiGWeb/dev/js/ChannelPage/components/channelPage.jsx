@@ -5,7 +5,7 @@ class ChannelPage extends React.Component {
 
     createChannelItems() {
         return this.props.channels.map((channel) => {
-            if (channel.Name.toLowerCase().indexOf(this.props.filterText.toLowerCase()) === -1) {
+            if (channel.name.toLowerCase().indexOf(this.props.filterText.toLowerCase()) === -1) {
                 return false;
             }
             return (<ChannelItem channel={channel} key={channel.id} / >);

@@ -1,23 +1,16 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
-import App from './Shared/App';
-import Home from './Home/Home';
-import ChannelPageIndex from './ChannelPage/index';
-import store from './store';
+import MusiG from './MusiG/index';
+import ChannelPage from './ChannelPage/index';
+import LiveFeed from './LiveFeed/LiveFeed';
+// import TBD from 'grommet/components/TBD';
 
-
-const routes =
-  (<Provider store={store}>
-    <Router history={hashHistory}>
-      <Route path="/" component={App}>
-        <IndexRoute component={Home} />
-      </Route>
-      <Route path="/channel" component={App} >
-        <IndexRoute component={ChannelPageIndex} />
-      </Route>
-    </Router>
-  </Provider>
-);
+const routes = [
+    { path: '/',
+        component: MusiG,
+        indexRoute: { component: LiveFeed },
+        childRoutes: [
+            { path: 'channel', component: ChannelPage },
+        ],
+    },
+];
 
 export default routes;

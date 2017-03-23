@@ -20,12 +20,12 @@ namespace EHVAG.MusiGModel.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
-            //context.Channel.Add(new Channel { Name = "YouTube", Description = "YouTube", fontAwesomeIconClass = "fa fa-youtube-square", Link = "", State = ChannelState.Active, });
-            //context.Channel.Add(new Channel { Name = "SoundCloud", Description = "YouTubeSoundCloud", fontAwesomeIconClass = "fa fa-soundcloud", Link = "", State = ChannelState.Active, });
-            //context.Channel.Add(new Channel { Name = "Spotify", Description = "Spotify", fontAwesomeIconClass = "fa fa-spotify", Link = "", State = ChannelState.Active, });
-            //context.Channel.Add(new Channel { Name = "USB", Description = "USB", fontAwesomeIconClass = "fa fa-usb", Link = "", State = ChannelState.CommingSoon, });
-            //context.Channel.Add(new Channel { Name = "Twitch", Description = "Twitch", fontAwesomeIconClass = "fa fa-twitch", Link = "", State = ChannelState.CommingSoon, });
-            //context.Channel.Add(new Channel { Name = "PayPal", Description = "PayPal", fontAwesomeIconClass = "fa fa-paypal", Link = "", State = ChannelState.CommingSoon, });
+            //context.Channel.Add(new Channel { Name = "YouTube", Description = "YouTube", FontAwesomeIconClass = "fa fa-youtube-square", Link = "", State = ChannelState.Active, });
+            //context.Channel.Add(new Channel { Name = "SoundCloud", Description = "YouTubeSoundCloud", FontAwesomeIconClass = "fa fa-soundcloud", Link = "", State = ChannelState.Active, });
+            //context.Channel.Add(new Channel { Name = "Spotify", Description = "Spotify", FontAwesomeIconClass = "fa fa-spotify", Link = "", State = ChannelState.Active, });
+            //context.Channel.Add(new Channel { Name = "USB", Description = "USB", FontAwesomeIconClass = "fa fa-usb", Link = "", State = ChannelState.CommingSoon, });
+            //context.Channel.Add(new Channel { Name = "Twitch", Description = "Twitch", FontAwesomeIconClass = "fa fa-twitch", Link = "", State = ChannelState.CommingSoon, });
+            //context.Channel.Add(new Channel { Name = "PayPal", Description = "PayPal", FontAwesomeIconClass = "fa fa-paypal", Link = "", State = ChannelState.CommingSoon, });
             //context.SaveChanges();
 
         }

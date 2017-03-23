@@ -44,7 +44,8 @@ namespace EHVAG.MusiGServer.Controller
             JArray o;
             using (var context = new MusiGDBContext())
             {
-                var channels = await (from c in context.Channel select c).ToListAsync();
+                //var channels = await (from c in context.Channel select new { c.Id, c.Name, c.URL, c.State, c.FontAwesomeIconClass }).ToListAsync();
+                var channels = await context.Channel.ToListAsync();
                 o = JArray.FromObject(channels);
             }
 

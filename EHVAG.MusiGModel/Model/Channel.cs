@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,22 +7,32 @@ namespace EHVAG.MusiGModel
 {
     public class Channel
     {
+        [JsonProperty("id")]
         public int Id { get; set; }
+
         [Required]
         [Index(IsUnique = true)]
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string fontAwesomeIconClass { get; set; }
-        public ChannelState State { get; set; }
-        public string Link { get; set; }
 
-        public virtual ICollection<User> Users { get; set; } = new List<User>();
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
+        [JsonProperty("fontAwesomeIconClass")]
+        public string FontAwesomeIconClass { get; set; }
+
+        [JsonProperty("state")]
+        public ChannelState State { get; set; }
+
+        [JsonProperty("url")]
+        public string URL { get; set; }
     }
 
     public enum ChannelState
     {
-        Active,
-        Inactive,
+        NotConnected,
+        Connected,
         CommingSoon
     }
 }

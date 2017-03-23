@@ -12,13 +12,13 @@ class ChannelItem extends React.Component {
         let channelActionText;
 
         if (this.props.channel.state === 0) {
-            channelActionUrl = `http://localhost/Channel/Add?channelname=${this.props.channel.title}`;
+            channelActionUrl = `Channel/Add?channelname=${this.props.channel.name}`;
             channelActionText = 'Verbinden!';
         } else if (this.props.channel.state === 1) {
-            channelActionUrl = `Channel/Remove?channelId=${this.props.channel.id}`;
+            channelActionUrl = `Channel/Remove?channelname=${this.props.channel.name}`;
             channelActionText = 'Entfernen!';
         } else {
-            channelActionUrl = '#';
+            channelActionUrl = '#/channel';
             channelActionText = 'Comming Soon™';
         }
 
@@ -27,7 +27,7 @@ class ChannelItem extends React.Component {
             <a href={this.props.channel.url} target="_blank">
               <i class={channelItemClasses} aria-hidden="true" />
             </a>
-            <h4 class={channelItemHeader}>{this.props.channel.title}</h4>
+            <h4 class={channelItemHeader}>{this.props.channel.name}</h4>
             <div class={channelItemHAction}>
               <a class="btn btn-outlined btn-white btn-sm" href={channelActionUrl}>{channelActionText}</a>
             </div>

@@ -11,18 +11,29 @@
       },
       entry: './dev/js/index.jsx',
       module: {
-          loaders: [{
-              test: /\.jsx?$/,
-              exclude: /(node_modules|bower_components)/,
-              loader: 'babel-loader',
-              query: {
-                  presets: ['react', 'es2015', 'stage-0'],
-                  plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties'],
+          loaders: [
+              {
+                  test: /\.jsx?$/,
+                  exclude: /(node_modules|bower_components)/,
+                  loader: 'babel-loader',
+                  query: {
+                      presets: ['react', 'es2015', 'stage-0'],
+                      plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties'],
+                  },
               },
-          }],
+              {
+                  test: /\.scss$/,
+                  loader: 'style!css!sass?outputStyle=compressed',
+              },
+          ],
+      },
+      sassLoader: {
+          includePaths: [
+              './node_modules',
+          ],
       },
       resolve: {
-          extensions: ['', '.js', '.jsx'],
+          extensions: ['', '.js', '.jsx', '.scss', '.css'],
       },
       output: {
           path: `${__dirname}/src/`,
