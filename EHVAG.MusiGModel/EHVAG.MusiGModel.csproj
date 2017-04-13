@@ -91,6 +91,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Channel.cs" />
+    <Compile Include="Model\IsoLocales.cs" />
     <Compile Include="MusiGDBContext.cs" />
     <Compile Include="Model\OAuth2Token.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

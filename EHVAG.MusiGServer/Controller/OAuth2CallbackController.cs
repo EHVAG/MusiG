@@ -1,4 +1,5 @@
 ﻿using EHVAG.MusiGModel;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using StatsHelix.Charizard;
 using System;
@@ -18,7 +19,7 @@ namespace EHVAG.MusiGServer.Controller
         public async Task<HttpResponse> YouTubeResponse(string code = null, string error = null)
         {
             // Check for bad requests
-            if (System.String.IsNullOrEmpty(code) && System.String.IsNullOrEmpty(error))
+            if (string.IsNullOrEmpty(code) && string.IsNullOrEmpty(error))
                 return Redirect(StaticPages.BadRequest);
 
             // User gave us no access
@@ -40,7 +41,7 @@ namespace EHVAG.MusiGServer.Controller
 
                 // Exchange AuthCode for AccessToken and RefreshToken
                 var response = await client.PostAsync(YouTubeClientSecret.TokenUri, new FormUrlEncodedContent(values));
-                responseJson = JObject.Parse(await response.Content.ReadAsStringAsync());
+                responseJson = JsonConvert.SerializeObject(await response.Content.ReadAsStringAsync());
             }
 
             // Handle response
