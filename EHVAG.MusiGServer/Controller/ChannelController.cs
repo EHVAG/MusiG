@@ -44,13 +44,18 @@ namespace EHVAG.MusiGServer.Controller
             JArray o;
             using (var context = new MusiGDBContext())
             {
-                //var channels = await (from c in context.Channel select new { c.Id, c.Name, c.URL, c.State, c.FontAwesomeIconClass }).ToListAsync();
                 var channels = await context.Channel.ToListAsync();
                 o = JArray.FromObject(channels);
             }
-
-            //return Json(o, HttpStatus.Ok, );
             return HttpResponse.Json(o, HttpStatus.Ok).AddHeader("Access-Control-Allow-Origin", @"http://localhost:8080");
+        }
+
+        [Middleware]
+        public Task<HttpResponse> TestMiddleware(HttpRequest req)
+        {
+            Console.WriteLine("test");
+            return Task.FromResult();
+            return null;
         }
     }
 }

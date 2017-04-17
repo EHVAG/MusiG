@@ -136,6 +136,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authenticated.cs" />
+    <Compile Include="Session.cs" />
     <Compile Include="Controller\ChannelController.cs" />
     <Compile Include="Controller\GoogleTokenId.cs" />
     <Compile Include="Controller\LiveFeedController.cs" />
@@ -153,12 +155,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Config\APIConfigs\YouTubeClientSecret.json.sample" />
+    <None Include="Config\Crypto\SecretKey.key.sample" />
+    <None Include="Config\Crypto\SecretKey.key" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EHVAG.MusiGModel\EHVAG.MusiGModel.csproj">
       <Project>{ed08ad83-7fb1-47b5-a336-35dbb49ba9aa}</Project>
       <Name>EHVAG.MusiGModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StatsHelix.Charizard\ActuallyWorkingWebSockets\ActuallyWorkingWebSockets\ActuallyWorkingWebSockets.csproj">
+      <Project>{b099dd77-a799-43b7-9e59-eb769309290d}</Project>
+      <Name>ActuallyWorkingWebSockets</Name>
     </ProjectReference>
     <ProjectReference Include="..\StatsHelix.Charizard\StatsHelix.Charizard\StatsHelix.Charizard.csproj">
       <Project>{579bf5b7-c359-4543-9d74-9c57e9a82b1a}</Project>

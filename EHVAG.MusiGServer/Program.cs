@@ -28,12 +28,11 @@ namespace EHVAG.MusiGServer
                 return -1;
             }
 
-            //server.UnexpectedException += e => Console.WriteLine(e);
             server.Run().Wait();
             return 0;
         }
 
-        public static void PopulateYouTubeClientSecrets()
+         public static void PopulateYouTubeClientSecrets()
         {
             dynamic googleClientSecrets = JsonConvert.DeserializeObject(File.ReadAllText(@"Config\APIConfigs\YouTubeClientSecret.json"));
 
@@ -50,6 +49,7 @@ namespace EHVAG.MusiGServer
             YouTubeClientSecret.AccessType = googleClientSecrets.web.access_type;
             YouTubeClientSecret.GrantType = googleClientSecrets.web.grant_type;
 
+            // Check if every propty of <code>YouTubeClientSecret</code> is set
             foreach (PropertyInfo prop in typeof(YouTubeClientSecret).GetProperties())
             {
                 if (prop.GetValue(null) == null || prop.GetValue(null).ToString() == string.Empty)

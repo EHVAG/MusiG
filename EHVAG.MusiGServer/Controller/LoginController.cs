@@ -54,16 +54,13 @@ namespace EHVAG.MusiGServer.Controller
                                     user.GivenName = responseJson.given_name;
                                     user.FamilyName = responseJson.family_name;
                                 }
+                                var signatureString = Session.GenerateSessionCookie(sub);
+
+                                return Redirect("/");
                             }
                         }
                     }
-
-                    // Next thing to do is HMAC + googleId + TimeStamp
-                    // Set this as a header
-                    // Validate all ServerCalls
-                    var signatureString =  Authentication.GenerateAuth(sub)
-
-                    return Redirect("/").SetCookie().SetCookie();
+                    
                 }
             }
             return HttpResponse.Redirect(StaticPages.BadRequest, false);
