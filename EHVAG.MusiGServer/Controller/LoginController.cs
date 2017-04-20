@@ -54,7 +54,7 @@ namespace EHVAG.MusiGServer.Controller
                                     user.GivenName = responseJson.given_name;
                                     user.FamilyName = responseJson.family_name;
                                 }
-                                var signatureString = Session.GenerateSessionCookie(sub);
+                                var signatureString = Session.SignSession(sub);
 
                                 return Redirect("/");
                             }
