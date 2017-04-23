@@ -9,18 +9,17 @@ namespace EHVAG.MusiGServer
 {
     public class Authenticated
     {
-        protected string CookieGoogleId { get; set; }
-        protected int AuthCookieString { get; set; }
+        protected string GoogleId { get; set; }
+        protected string AuthCookieString { get; set; }
 
         [Middleware]
-        public async Task<HttpResponse> VerifyUserSession(HttpRequest req)
+        public Task<HttpResponse> VerifyUserSession(HttpRequest request)
         {
-            var authHeader = req.GetCookie(Session.AuthHeader);
-            bool err = false;
+            AuthCookieString = request.GetCookie(Session.AuthHeader);
 
             MemoryStream stream = new MemoryStream();
             StreamWriter writer = new StreamWriter(stream);
-            writer.Write(authHeader);
+            writer.Write(AuthCookieString);
             writer.Flush();
             stream.Position = 0;
 
@@ -30,37 +29,45 @@ namespace EHVAG.MusiGServer
                 byte[] storedHash = new byte[hmac.HashSize / 8];
                 stream.Read(storedHash, 0, storedHash.Length);
 
-                // Create an array to hold the actual message
+                // Create an array to hold the actual message.
                 byte[] message = new byte[stream.Length - hmac.HashSize / 8];
                 stream.Read(storedHash, storedHash.Length, Convert.ToInt32(stream.Length));
                 
-                // Compute the hash of the remaining contents of the file.
-                // The stream is properly positioned at the beginning of the content, 
-                // immediately after the stored hash value.
+                // Compute the hash of the message.
                 byte[] computedHash = hmac.ComputeHash(message);
 
-                // compare the computed hash with the stored value
+                // compare the computed hash with the stored value.
                 for (int i = 0; i < storedHash.Length; i++)
                 {
                     if (computedHash[i] != storedHash[i])
                     {
-                        // User is not authenticated anymore
-                        return HttpResponse.Redirect(StaticPages.Login);
+                        // User is not authenticated anymore.
+                        return Task.FromResult(HttpResponse.Redirect(StaticPages.Login));
                     }
                 }
 
-                // Verify session age
+                // Get the timestamp from the AuthHeader.
+                // This tells us how old the session is.
+                // Since the "message" part is just an id + a timestamp Encoding.Unicode should do the job.
                 var messageString = Encoding.Unicode.GetString(message);
                 var index = messageString.IndexOf(' ');
                 if (index > 0)
                 {
                     DateTimeOffset cookieDateTimeOffset;
                     DateTimeOffset.TryParse(messageString.Substring(index), out cookieDateTimeOffset);
-                    if ((DateTimeOffset.UtcNow - cookieDateTimeOffset) > new TimeSpan(1, 30))
-                    {
 
+                    // Check if the AuthHeader is older than one hour.
+                    if ((DateTimeOffset.UtcNow - cookieDateTimeOffset) > new TimeSpan(1))
+                    {
+                        return Task.FromResult(HttpResponse.Redirect(StaticPages.Login));
                     }
                 }
+
+                // Save the users GoogleId for future API calls.
+                GoogleId = messageString.Substring(0, index);
+
+                // Every checked passed.
+                return null;
             }
         }
     }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace EHVAG.MusiGServer.Controller
 {
     [Controller]
-    public class ChannelController
+    public class ChannelController : Authenticated
     {
         public HttpResponse Add(string channelName)
         {
@@ -48,14 +48,6 @@ namespace EHVAG.MusiGServer.Controller
                 o = JArray.FromObject(channels);
             }
             return HttpResponse.Json(o, HttpStatus.Ok).AddHeader("Access-Control-Allow-Origin", @"http://localhost:8080");
-        }
-
-        [Middleware]
-        public Task<HttpResponse> TestMiddleware(HttpRequest req)
-        {
-            Console.WriteLine("test");
-            return Task.FromResult();
-            return null;
         }
     }
 }

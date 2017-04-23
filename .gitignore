@@ -197,6 +197,7 @@ FakesAssemblies/
 
 # Exclude all actual client/API configs here
 YouTubeClientSecret.json
+SecretKey.key
 
 # Vagrant stuff
 acceptance_config.yml

@@ -32,10 +32,5 @@ namespace EHVAG.MusiGServer
                 return (hmac.ComputeHash(Encoding.Unicode.GetBytes(sessionId))).ToString();
             }
         }
-
-        public static bool VerifySession(string sessionCookie)
-        {
-            
-        }
     }
 }
