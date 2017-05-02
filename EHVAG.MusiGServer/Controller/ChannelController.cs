@@ -6,6 +6,8 @@ using static StatsHelix.Charizard.HttpResponse;
 using EHVAG.MusiGModel;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace EHVAG.MusiGServer.Controller
 {
@@ -36,18 +38,21 @@ namespace EHVAG.MusiGServer.Controller
         private string GetYouTubeAuthUri()
         {
             Func<string, string> ue = System.Web.HttpUtility.UrlEncode;
-            return $@"{YouTubeClientSecret.AuthUri}?scope={ue(YouTubeClientSecret.Scope)}&access_type={ue(YouTubeClientSecret.AccessType)}&redirect_uri={ue(YouTubeClientSecret.RedirectUris)}&response_type={ue(YouTubeClientSecret.Response)}&client_id={ ue(YouTubeClientSecret.ClientId)}";
+            return $@"{YouTubeClientSecret.AuthUri}" +
+                    $@"?scope={ue(YouTubeClientSecret.Scope)}" +
+                    $@"&access_type={ue(YouTubeClientSecret.AccessType)}" +
+                    $@"&redirect_uri={ue(YouTubeClientSecret.RedirectUris)}" +
+                    $@"&response_type={ue(YouTubeClientSecret.Response)}" +
+                    $@"&client_id={ ue(YouTubeClientSecret.ClientId)}";
         }
 
         public async Task<HttpResponse> GetChannels()
         {
-            JArray o;
             using (var context = new MusiGDBContext())
             {
                 var channels = await context.Channel.ToListAsync();
-                o = JArray.FromObject(channels);
+                return HttpResponse.Json(JArray.FromObject(channels), HttpStatus.Ok);
             }
-            return HttpResponse.Json(o, HttpStatus.Ok).AddHeader("Access-Control-Allow-Origin", @"http://localhost:8080");
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace EHVAG.MusiGServer.Controller
 {
-    public class GoogleTokenId
+    public class GoogleIdToken
     {
-        public string TokenId { get; set; }
+        public string IdToken { get; set; }
     }
 }

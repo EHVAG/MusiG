@@ -6,7 +6,7 @@ import Search from 'grommet/components/Search';
 import Box from 'grommet/components/Box';
 import Tiles from 'grommet/components/Tiles';
 import ChannelTile from './Components/ChannelTile';
-import { fetchChannels } from './actions/channelActions';
+import { fetchChannels } from './Actions/ChannelActions';
 import Button from 'grommet/components/Button';
 
 class Index extends React.Component {

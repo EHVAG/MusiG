@@ -11,7 +11,11 @@ namespace EHVAG.MusiGServer
     {
         private static int Main(string[] args)
         {
-            var server = new HttpServer(new IPEndPoint(IPAddress.Loopback, 80), typeof(Program).Assembly);
+            var server = new HttpServer(new IPEndPoint(IPAddress.Loopback, 1337), typeof(Program).Assembly);
+
+            #if DEBUG
+                HttpResponse.InsecureMode_DoNotUseThisInProduction = true;
+            #endif
 
             try
             {
@@ -32,10 +36,11 @@ namespace EHVAG.MusiGServer
             return 0;
         }
 
-         public static void PopulateYouTubeClientSecrets()
+        public static void PopulateYouTubeClientSecrets()
         {
             dynamic googleClientSecrets = JsonConvert.DeserializeObject(File.ReadAllText(@"Config\APIConfigs\YouTubeClientSecret.json"));
 
+            // TODO: Fix this shit.
             YouTubeClientSecret.AuthUri = googleClientSecrets.web.auth_uri;
             YouTubeClientSecret.ClientId = googleClientSecrets.web.client_id;
             YouTubeClientSecret.ProjectId = googleClientSecrets.web.project_id;

@@ -19,7 +19,7 @@ namespace EHVAG.GenerateCryptoKey
 
                 var dir = Directory.GetCurrentDirectory();
 
-                using (FileStream writer = new FileStream(@Directory.GetCurrentDirectory()+@"\SecretKey.key", FileMode.Create))
+                using (FileStream writer = new FileStream(@dir+ @"\SecretKey.key", FileMode.Create))
                 {
                     writer.Write(secretkey, 0, secretkey.Length);
                 }

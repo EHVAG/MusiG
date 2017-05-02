@@ -136,8 +136,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authenticated.cs" />
-    <Compile Include="Session.cs" />
+    <Compile Include="Authentication\Authenticated.cs" />
+    <Compile Include="Authentication\Session.cs" />
     <Compile Include="Controller\ChannelController.cs" />
     <Compile Include="Controller\GoogleTokenId.cs" />
     <Compile Include="Controller\LiveFeedController.cs" />
@@ -156,7 +156,9 @@
     </None>
     <None Include="Config\APIConfigs\YouTubeClientSecret.json.sample" />
     <None Include="Config\Crypto\SecretKey.key.sample" />
-    <None Include="Config\Crypto\SecretKey.key" />
+    <None Include="Config\Crypto\SecretKey.key">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

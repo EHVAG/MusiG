@@ -11,7 +11,7 @@ namespace EHVAG.MusiGModel
         public int ChannelId { get; set; }
         [Key]
         [Column(Order = 2)]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string AccessToken { get; set; }
         public string TokenType { get; set; }
         public string RefreshToken { get; set; }
@@ -19,6 +19,6 @@ namespace EHVAG.MusiGModel
 
         // Navigation properties and relations
         public virtual Channel Channel { get; set; }
-        public virtual User User { get; set; }
+        public virtual GoogleUser GoogleUser { get; set; }
     }
 }

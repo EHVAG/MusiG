@@ -10,60 +10,59 @@ using System.Linq;
 namespace EHVAG.MusiGServer.Controller
 {
     [Controller]
-    class LoginController
+    public class LoginController
     {
-        public async Task<HttpResponse> GoogleLogin(GoogleTokenId token)
+        /// <summary>
+        /// https://developers.google.com/identity/sign-in/web/backend-auth
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public async Task<HttpResponse> GoogleLogin(GoogleIdToken token)
         {
-            if (!string.IsNullOrEmpty(token.TokenId))
+            if (!string.IsNullOrEmpty(token.IdToken))
             {
                 using (var client = new HttpClient())
                 {
                     var values = new Dictionary<string, string>
                     {
-                        { "id_token", token.TokenId}
+                        { "id_token", token.IdToken}
                     };
 
-                    // Verify tokenId
+                    // Verify IdToken against Google endpoint
+                    // More details: https://developers.google.com/identity/sign-in/web/backend-auth#calling-the-tokeninfo-endpoint
                     var response = await client.PostAsync(@"https://www.googleapis.com/oauth2/v3/tokeninfo", new FormUrlEncodedContent(values));
-                    dynamic responseJson = JsonConvert.SerializeObject(await response.Content.ReadAsStringAsync());
+                    var responseJson = JsonConvert.DeserializeObject<GoogleUser>(await response.Content.ReadAsStringAsync());
 
-                    // Check if request was successful and if our ClientId matches with the one in the response
-                    if (response.IsSuccessStatusCode && responseJson.aud == YouTubeClientSecret.ClientId)
+                    // Check if request was successful and if our Google ClientId matches with the one in the response
+                    if (response.IsSuccessStatusCode && responseJson.Aud == YouTubeClientSecret.ClientId)
                     {
                         using (MusiGDBContext context = new MusiGDBContext())
                         {
                             using (var transaction = context.Database.BeginTransaction())
                             {
-                                string sub = responseJson.sub;
-                                if (!context.User.Any(u => u.sub == sub))
+                                // The sub field is the users unique Google Id
+                                string sub = responseJson.Sub;
+                                if (!context.GoogleUser.Any(u => u.Sub == sub))
                                 {
                                     // Create new user
-                                    User user = new User();
-                                    user.azp = responseJson.azp;
-                                    user.sub = sub;
-                                    user.iss = responseJson.iss;
-                                    user.aud = responseJson.aud;
-                                    user.iat = responseJson.iat;
-                                    user.exp = responseJson.exp;
+                                    GoogleUser user = responseJson;
+                                    user.Sub = sub;
 
-                                    user.TokenId = responseJson.TokenId;
-                                    user.Email = responseJson.email;
-                                    user.EmailVerified = responseJson.email_verified;
-                                    user.Name = responseJson.name;
-                                    user.Picture = responseJson.picture;
-                                    user.GivenName = responseJson.given_name;
-                                    user.FamilyName = responseJson.family_name;
+                                    context.GoogleUser.Add(user);
+
+                                    await context.SaveChangesAsync();
+                                    transaction.Commit();
                                 }
-                                var signatureString = Session.SignSession(sub);
 
-                                return Redirect("/");
+                                var signatureString = Session.SignSession(sub);
+                                return Redirect("/").SetCookie(Session.GoogleIdHeader, sub, false)
+                                                    .SetCookie(Session.AuthHeader, signatureString, true);
                             }
                         }
                     }
-                    
                 }
             }
-            return HttpResponse.Redirect(StaticPages.BadRequest, false);
+            return Redirect(StaticPages.BadRequest, false);
         }
     }
 }

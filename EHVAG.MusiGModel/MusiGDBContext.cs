@@ -10,7 +10,7 @@
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<MusiGDBContext, EHVAG.MusiGModel.Migrations.Configuration>("MusiGDev"));
         }
 
-        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<GoogleUser> GoogleUser { get; set; }
         public virtual DbSet<OAuth2Token> OAuth2Token { get; set; }
         public virtual DbSet<Channel> Channel { get; set; }
 

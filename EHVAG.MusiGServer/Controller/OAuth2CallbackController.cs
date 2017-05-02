@@ -1,6 +1,5 @@
 ﻿using EHVAG.MusiGModel;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using StatsHelix.Charizard;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ using static StatsHelix.Charizard.HttpResponse;
 namespace EHVAG.MusiGServer.Controller
 {
     [Controller]
-    public class oAuth2CallbackController
+    public class OAuth2CallbackController : Authenticated
     {
         // TODO: Check who is calling this endpoint. Cookies?
         public async Task<HttpResponse> YouTubeResponse(string code = null, string error = null)
@@ -44,14 +43,13 @@ namespace EHVAG.MusiGServer.Controller
                 responseJson = JsonConvert.SerializeObject(await response.Content.ReadAsStringAsync());
             }
 
-            // Handle response
             if (responseJson.error == null)
             {
                 using (var context = new MusiGDBContext())
                 {
-                    // Check if user already has a valid Token.
+                    // Check if user has already a valid Token.
                     // This could be the case if the user manually calls this controller.
-                    if (!await OAuth2TokenFind(context, 123, "YouTube"))
+                    if (!await OAuth2TokenFind(context, this.GoogleId, "YouTube"))
                     {
                         using (var transaction = context.Database.BeginTransaction())
                         {
@@ -61,8 +59,7 @@ namespace EHVAG.MusiGServer.Controller
                                     new OAuth2Token
                                     {
                                         Channel = await context.Channel.Where(c => c.Name == "YouTube").FirstOrDefaultAsync(),
-                                        // TODO: We don't know the user yet. Add it later.
-                                        UserId = 1,
+                                        UserId = this.GoogleId,
                                         AccessToken = responseJson.access_token,
                                         TokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(Convert.ToDouble(responseJson.expires_in)),
                                         TokenType = responseJson.token_type,
@@ -72,10 +69,10 @@ namespace EHVAG.MusiGServer.Controller
                                 await context.SaveChangesAsync();
                                 transaction.Commit();
                             }
-                            catch (Exception excep)
+                            catch (Exception e)
                             {
                                 transaction.Rollback();
-                                Console.WriteLine(excep.Message);
+                                Console.WriteLine(e.Message);
                             }
                         }
                     }
@@ -93,7 +90,7 @@ namespace EHVAG.MusiGServer.Controller
             return Json(responseJson, HttpStatus.InternalServerError);
         }
 
-        private async Task<bool> OAuth2TokenFind(MusiGDBContext context, int userId, string channelName)
+        private async Task<bool> OAuth2TokenFind(MusiGDBContext context, string userId, string channelName)
         {
             return await (from token in context.OAuth2Token
                           from channel in context.Channel

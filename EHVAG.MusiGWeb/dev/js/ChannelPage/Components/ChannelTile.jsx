@@ -11,16 +11,6 @@ import Button from 'grommet/components/Button';
 class ChannelTile extends Component {
 
     render() {
-        const path = `/ChannelAdd/${this.props.item.name}`;
-        let label;
-// switch ({this.props.item.state}) {
-//     case 0:
-//         label = 'Verbinden!'
-//         break;
-//     default:
-//
-// }
-
         return (
           <Tile
             align="center" separator="all" pad="small" justify="between"
@@ -36,12 +26,12 @@ class ChannelTile extends Component {
               </Label>
               <Box>
                 <Button
-                  label="Label"
+                  label={this.props.item.name}
                   href="#"
                   primary
                   accent={false}
                   plain={false}
-                  path={path}
+                  path={''}
                 />
               </Box>
             </Box>

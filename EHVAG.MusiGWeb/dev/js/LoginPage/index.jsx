@@ -1,47 +1,32 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import GoogleLogin from 'react-google-login';
 import Box from 'grommet/components/Box';
+import Button from 'grommet/components/Button';
 import Title from 'grommet/components/Title';
+import Environment from '../Environment';
 
 class Index extends React.Component {
     constructor(props) {
+        console.log(Environment);
         super(props);
-        this.onSignIn = this.onSignIn.bind(this);
-        this.onClick = this.onClick.bind(this);
-
- // This binding is necessary to make `this` work in the callback
-        this.handleClick = this.handleClick.bind(this);
+        this.onSuccess = this.onSuccess.bind(this);
+        this.onError = this.onError.bind(this);
     }
 
-    componentDidMount() {
-        gapi.signin2.render('g-signin2', {
-            scope: 'https://www.googleapis.com/auth/plus.login',
-            width: 200,
-            height: 50,
-            longtitle: true,
-            theme: 'dark',
-            onsuccess: this.onSignIn,
-        });
-    }
-
-    onClick() {
-        console.log('test');
-    }
-    onSignIn(googleIdToken) {
-        console.log('test');
+    onSuccess(googleIdToken) {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://localhost/Login/GoogleLogin');
+        xhr.open('POST', 'api/Login/GoogleLogin');
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onload = function () {
             console.log(`Signed in as: ${xhr.responseText}`);
         };
-        const obj = { idtoken: googleIdToken };
+        const obj = { idtoken: googleIdToken.getAuthResponse().id_token };
         const myJSON = JSON.stringify(obj);
         xhr.send(myJSON);
     }
 
-    handleClick() {
-        console.log('test');
+    onError() {
+        console.log('onError');
     }
 
     render() {
@@ -50,16 +35,30 @@ class Index extends React.Component {
             <Title responsive={false}>
               <span>Kanäle</span>
             </Title>
-            <div class="g-signin2" data-onsuccess={this.handleClick} onClick={this.onClick} />
+            <Button>
+              {/*
+                  For the style property we just provide a dummy value.
+                  So Gromment can overwrite the default style wich this component provides.
+              */}
+              {/*
+                  TODO: scope and clientId should not be static in the code.
+                  Move to some config file.
+              */}
+              <GoogleLogin
+                clientId="621236350765-15njpt6aaf05jtmoag5n1igd4oa6idjj.apps.googleusercontent.com"
+                scope="https://www.googleapis.com/auth/userinfo.profile"
+                onSuccess={this.onSuccess}
+                onFailure={this.onError}
+                offline={false}
+                approvalPrompt="force"
+                responseType="id_token"
+                style={{ }}
+                disabled={false}
+              />
+            </Button>
           </Box>
         );
     }
 }
 
-function mapStateToProps(store) {
-    return {
-        channels: store.channels.channels,
-    };
-}
-
-export default connect(mapStateToProps)(Index);
+export default (Index);
