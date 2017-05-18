@@ -1,5 +1,6 @@
 ﻿using EHVAG.MusiGModel;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using StatsHelix.Charizard;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace EHVAG.MusiGServer.Controller
             if (!string.IsNullOrEmpty(error))
                 return String("Fells bad man");
 
-            dynamic responseJson;
+            JObject responseJson;
             using (var client = new HttpClient())
             {
                 var values = new Dictionary<string, string>
@@ -40,10 +41,10 @@ namespace EHVAG.MusiGServer.Controller
 
                 // Exchange AuthCode for AccessToken and RefreshToken
                 var response = await client.PostAsync(YouTubeClientSecret.TokenUri, new FormUrlEncodedContent(values));
-                responseJson = JsonConvert.SerializeObject(await response.Content.ReadAsStringAsync());
+                responseJson = JObject.Parse(await response.Content.ReadAsStringAsync());
             }
 
-            if (responseJson.error == null)
+            if (responseJson["error"] == null)
             {
                 using (var context = new MusiGDBContext())
                 {
@@ -60,10 +61,10 @@ namespace EHVAG.MusiGServer.Controller
                                     {
                                         Channel = await context.Channel.Where(c => c.Name == "YouTube").FirstOrDefaultAsync(),
                                         UserId = this.GoogleId,
-                                        AccessToken = responseJson.access_token,
-                                        TokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(Convert.ToDouble(responseJson.expires_in)),
-                                        TokenType = responseJson.token_type,
-                                        RefreshToken = responseJson.refresh_token,
+                                        AccessToken = responseJson["access_token"].ToString(),
+                                        TokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(Convert.ToDouble(responseJson["expires_in"].ToString())),
+                                        TokenType = responseJson["oken_type"].ToString(),
+                                        RefreshToken = responseJson["refresh_token"].ToString(),
                                     }
                                 );
                                 await context.SaveChangesAsync();

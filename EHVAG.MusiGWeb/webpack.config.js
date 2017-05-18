@@ -9,13 +9,13 @@ module.exports = {
             'Access-Control-Allow-Origin': '*',
         },
         proxy: {
-            "/api": {
-                target: "http://localhost:1337",
-                pathRewrite: { "^/api": "" }
-            }
-        }
+            '/api': {
+                target: 'http://localhost:1337',
+                pathRewrite: { '^/api': '' },
+            },
+        },
     },
-    entry: './dev/js/index.jsx',
+    entry: './src/js/index.jsx',
     module: {
         loaders: [
             {
@@ -24,7 +24,11 @@ module.exports = {
                 loader: 'babel-loader',
                 query: {
                     presets: ['react', 'es2015', 'stage-0'],
-                    plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties'],
+                    plugins: [
+                        'react-html-attrs',
+                        'transform-decorators-legacy',
+                        'transform-class-properties',
+                    ],
                 },
             },
             {
@@ -34,18 +38,18 @@ module.exports = {
         ],
     },
     sassLoader: {
-        includePaths: [
-            './node_modules',
-        ],
+        includePaths: ['./node_modules'],
     },
     resolve: {
         extensions: ['', '.js', '.jsx', '.scss', '.css'],
     },
     output: {
-        path: `${__dirname}/src/`,
+        path: `${__dirname}/public/`,
         filename: '/js/index.min.js',
     },
-    plugins: debug ? [] : [
+    plugins: debug
+    ? []
+    : [
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin({

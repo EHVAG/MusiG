@@ -29,23 +29,22 @@ namespace EHVAG.MusiGModel
         public IsoLocales Locale { get; set; }
 
         // Stuff we get from Google and keep it for...research
-        [JsonProperty("Sub")]
+        [JsonProperty("sub")]
         public string Sub { get; set; }
 
-        [JsonProperty("Azp")]
+        [JsonProperty("azp")]
         public string Azp { get; set; }
 
         [Key]
-        [JsonProperty("Aud")]
         public string Aud { get; set; }
 
-        [JsonProperty("Iat")]
+        [JsonProperty("iat")]
         public string Iat { get; set; }
 
-        [JsonProperty("Exp")]
+        [JsonProperty("exp")]
         public string Exp { get; set; }
 
-        [JsonProperty("Iss")]
+        [JsonProperty("iss")]
         public string Iss { get; set; }
 
         public virtual ICollection<OAuth2Token> Channels { get; set; } = new List<OAuth2Token>();

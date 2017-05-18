@@ -14,7 +14,7 @@ namespace EHVAG.MusiGServer.Controller
     [Controller]
     public class ChannelController : Authenticated
     {
-        public HttpResponse Add(string channelName)
+        public HttpResponse AddChannel(string channelName)
         {
             switch (channelName)
             {
@@ -25,7 +25,7 @@ namespace EHVAG.MusiGServer.Controller
         }
 
         // https://developers.google.com/identity/protocols/OAuth2InstalledApp#tokenrevoke
-        public HttpResponse Remove(string channelName, string userId)
+        public HttpResponse RemoveChannel(string channelName, string userId)
         {
             switch (channelName)
             {
