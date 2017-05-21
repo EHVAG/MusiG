@@ -15,7 +15,6 @@ namespace EHVAG.MusiGServer.Controller
     [Controller]
     public class OAuth2CallbackController : Authenticated
     {
-        // TODO: Check who is calling this endpoint. Cookies?
         public async Task<HttpResponse> YouTubeResponse(string code = null, string error = null)
         {
             // Check for bad requests
@@ -50,7 +49,7 @@ namespace EHVAG.MusiGServer.Controller
                 {
                     // Check if user has already a valid Token.
                     // This could be the case if the user manually calls this controller.
-                    if (!await OAuth2TokenFind(context, this.GoogleId, "YouTube"))
+                    if (!await OAuth2TokenFind(context, this.GoogleId, Channels.YouTube))
                     {
                         using (var transaction = context.Database.BeginTransaction())
                         {
@@ -59,11 +58,11 @@ namespace EHVAG.MusiGServer.Controller
                                 context.OAuth2Token.Add(
                                     new OAuth2Token
                                     {
-                                        Channel = await context.Channel.Where(c => c.Name == "YouTube").FirstOrDefaultAsync(),
+                                        ChannelId = Channels.YouTube,
                                         UserId = this.GoogleId,
                                         AccessToken = responseJson["access_token"].ToString(),
                                         TokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(Convert.ToDouble(responseJson["expires_in"].ToString())),
-                                        TokenType = responseJson["oken_type"].ToString(),
+                                        TokenType = responseJson["token_type"].ToString(),
                                         RefreshToken = responseJson["refresh_token"].ToString(),
                                     }
                                 );
@@ -85,18 +84,18 @@ namespace EHVAG.MusiGServer.Controller
                     }
                 }
                 // TODO: Add Redirect with meaningfull message
+                Type type = typeof(ChannelController);
                 Redirect("/channel");
             }
-            // If we get here; Something went wrong. Present answer from the server. Google knows whats up.
+            // If we get here; Something went wrong. Present answer from the Google server. Google knows what's up.
             return Json(responseJson, HttpStatus.InternalServerError);
         }
 
-        private async Task<bool> OAuth2TokenFind(MusiGDBContext context, string userId, string channelName)
+        private async Task<bool> OAuth2TokenFind(MusiGDBContext context, string userId, Channels channelId)
         {
             return await (from token in context.OAuth2Token
                           from channel in context.Channel
-                          where channel.Name == channelName
-                          && token.ChannelId == channel.Id
+                          where token.ChannelId == channel.Id
                           && token.UserId == userId
                           select token).AnyAsync();
         }

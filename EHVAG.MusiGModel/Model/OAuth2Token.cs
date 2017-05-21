@@ -8,7 +8,7 @@ namespace EHVAG.MusiGModel
     {
         [Key]
         [Column(Order = 1)]
-        public int ChannelId { get; set; }
+        public Channels ChannelId { get; set; }
         [Key]
         [Column(Order = 2)]
         public string UserId { get; set; }

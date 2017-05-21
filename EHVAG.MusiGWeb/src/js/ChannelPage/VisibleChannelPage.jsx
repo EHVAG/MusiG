@@ -17,6 +17,7 @@ class VisibleChannelPage extends React.Component {
 
     render() {
         const { channels } = this.props;
+console.log(channels);
 
         let items,
             onMore;

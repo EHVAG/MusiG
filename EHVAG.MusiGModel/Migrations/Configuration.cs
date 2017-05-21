@@ -21,58 +21,36 @@ namespace EHVAG.MusiGModel.Migrations
             //  to avoid creating duplicate seed data. E.g.
             //
             context.Channel.AddOrUpdate(
-            c => c.Name,
+            c => c.Id,
             new Channel
             {
-                Name = "YouTube",
+                Id = Channels.YouTube,
                 Description = "YouTube",
                 FontAwesomeIconClass = "fa fa-youtube-square",
-                URL = "",
-                State = ChannelState.Connected,
+                URL = "https://youtube.com",
             },
             new Channel
             {
-                Name = "SoundCloud",
+                Id = Channels.Soundcloud,
                 Description = "YouTubeSoundCloud",
                 FontAwesomeIconClass = "fa fa-soundcloud",
-                URL = "",
-                State = ChannelState.Connected,
+                URL = "https://soundcloud.com",
             },
 
             new Channel
             {
-                Name = "Spotify",
+                Id = Channels.Spotify,
                 Description = "Spotify",
                 FontAwesomeIconClass = "fa fa-spotify",
-                URL = "",
-                State = ChannelState.Connected,
+                URL = "https://spotify.com",
             },
 
             new Channel
             {
-                Name = "USB",
+                Id = Channels.USB,
                 Description = "USB",
                 FontAwesomeIconClass = "fa fa-usb",
-                URL = "",
-                State = ChannelState.Connected,
-            },
-
-            new Channel
-            {
-                Name = "Twitch",
-                Description = "Twitch",
-                FontAwesomeIconClass = "fa fa-twitch",
-                URL = "",
-                State = ChannelState.Connected,
-            },
-
-            new Channel
-            {
-                Name = "PayPal",
-                Description = "PayPal",
-                FontAwesomeIconClass = "fa fa-paypal",
-                URL = "",
-                State = ChannelState.Connected,
+                URL = ""
             });
 
             context.SaveChanges();
