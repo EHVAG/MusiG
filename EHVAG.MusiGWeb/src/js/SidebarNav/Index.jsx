@@ -11,16 +11,13 @@ import CloudIcon from 'grommet/components/icons/base/Cloud';
 export default class SidebarNav extends React.Component {
     render() {
         return (
-          <Sidebar colorIndex="grey-1-a" size="xsmall" fixed="true" align="center">
+          <Sidebar colorIndex="grey-1-a" size="xsmall" fixed align="center">
             <Header size="small" justify="between" pad={{ vertical: 'medium' }}>
               <Title>
-                <Image
-                  src="../../img/EHVAGLogoWhite.png"
-                  size="thumb"
-                />
+                <Image src="../../img/EHVAGLogoWhite.png" size="thumb" />
               </Title>
             </Header>
-            <Menu fill="true" primary="true">
+            <Menu fill primary>
               <Anchor path="/" label="Live Feed" />
               <Anchor path="/channel" label="Kanäle" />
               <Anchor path="/login" label="Login" />

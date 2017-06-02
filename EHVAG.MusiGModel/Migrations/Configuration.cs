@@ -25,14 +25,14 @@ namespace EHVAG.MusiGModel.Migrations
             new Channel
             {
                 Id = Channels.YouTube,
-                Description = "YouTube",
+                Name = "YouTube",
                 FontAwesomeIconClass = "fa fa-youtube-square",
                 URL = "https://youtube.com",
             },
             new Channel
             {
                 Id = Channels.Soundcloud,
-                Description = "YouTubeSoundCloud",
+                Name = "Soundcloud",
                 FontAwesomeIconClass = "fa fa-soundcloud",
                 URL = "https://soundcloud.com",
             },
@@ -40,7 +40,7 @@ namespace EHVAG.MusiGModel.Migrations
             new Channel
             {
                 Id = Channels.Spotify,
-                Description = "Spotify",
+                Name = "Spotify",
                 FontAwesomeIconClass = "fa fa-spotify",
                 URL = "https://spotify.com",
             },
@@ -48,7 +48,7 @@ namespace EHVAG.MusiGModel.Migrations
             new Channel
             {
                 Id = Channels.USB,
-                Description = "USB",
+                Name = "USB",
                 FontAwesomeIconClass = "fa fa-usb",
                 URL = ""
             });

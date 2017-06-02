@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
-
-// Import reducers here
-import channels from './ChannelPage/reducers/channelReducer';
+import { routerReducer } from 'react-router-redux';
+import channels from './ChannelPage/Reducers/ChannelReducer';
+import googleLogin from './GoogleLoginPage/Reducers/GoogleLoginReducer';
 
 const rootReducer = combineReducers({
     channels,
+    googleLogin,
+    router: routerReducer,
 });
 
 export default rootReducer;

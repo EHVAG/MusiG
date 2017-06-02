@@ -1,5 +1,4 @@
 ﻿using EHVAG.MusiGModel;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using StatsHelix.Charizard;
 using System;
@@ -24,7 +23,7 @@ namespace EHVAG.MusiGServer.Controller
             // User gave us no access
             // TODO: We need a redirect and message
             if (!string.IsNullOrEmpty(error))
-                return String("Fells bad man");
+                return Redirect("/channel");
 
             JObject responseJson;
             using (var client = new HttpClient())
@@ -55,17 +54,14 @@ namespace EHVAG.MusiGServer.Controller
                         {
                             try
                             {
-                                context.OAuth2Token.Add(
-                                    new OAuth2Token
-                                    {
-                                        ChannelId = Channels.YouTube,
-                                        UserId = this.GoogleId,
-                                        AccessToken = responseJson["access_token"].ToString(),
-                                        TokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(Convert.ToDouble(responseJson["expires_in"].ToString())),
-                                        TokenType = responseJson["token_type"].ToString(),
-                                        RefreshToken = responseJson["refresh_token"].ToString(),
-                                    }
-                                );
+                                context.OAuth2Token.Add(new OAuth2Token
+                                {
+                                    ChannelId = Channels.YouTube,
+                                    UserId = this.GoogleId,
+                                    AccessToken = responseJson["access_token"].ToString(),
+                                    TokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(Convert.ToDouble(responseJson["expires_in"].ToString())),
+                                    TokenType = responseJson["token_type"].ToString()
+                                });
                                 await context.SaveChangesAsync();
                                 transaction.Commit();
                             }
@@ -73,6 +69,7 @@ namespace EHVAG.MusiGServer.Controller
                             {
                                 transaction.Rollback();
                                 Console.WriteLine(e.Message);
+                                return Redirect(StaticPages.InternalServerError);
                             }
                         }
                     }
@@ -80,12 +77,11 @@ namespace EHVAG.MusiGServer.Controller
                     {
                         // User has channel already authenticated.
                         // Maybe present an usefull help page?
-                        Redirect(StaticPages.AlreadyAuthenticated);
+                        return Redirect(StaticPages.AlreadyAuthenticated);
                     }
                 }
                 // TODO: Add Redirect with meaningfull message
-                Type type = typeof(ChannelController);
-                Redirect("/channel");
+                return Redirect("/channel");
             }
             // If we get here; Something went wrong. Present answer from the Google server. Google knows what's up.
             return Json(responseJson, HttpStatus.InternalServerError);

@@ -12,16 +12,3 @@ export function fetchChannels() {
       });
     };
 }
-
-export function addChannel(name) {
-    return function (dispatch) {
-        axios
-      .get(`api/Channel/AddChannel?channelName=${name}`)
-      .then((response) => {
-          dispatch({ type: 'ADD_CHANNEL_FULFILLED', payload: response.data });
-      })
-      .catch((err) => {
-          dispatch({ type: 'ADD_CHANNEL_REJECTED', payload: err });
-      });
-    };
-}

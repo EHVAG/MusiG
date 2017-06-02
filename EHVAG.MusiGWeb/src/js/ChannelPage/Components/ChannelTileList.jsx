@@ -16,7 +16,6 @@ class ChannelTileList extends React.Component {
     }
 
     comonentWillMount() {
-        console.log('test');
         this.props.onFetchChannels();
     }
 
@@ -27,7 +26,7 @@ class ChannelTileList extends React.Component {
             items = this.props.channels.map(item => (
               <ChannelTile
                 key={item.id}
-                item={item}
+                channel={item}
                 onClick={() => this.props.onChannelAddClick()}
               />
       ));

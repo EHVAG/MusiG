@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import Tile from 'grommet/components/Tile';
 import Box from 'grommet/components/Box';
 import Heading from 'grommet/components/Heading';
@@ -9,6 +8,17 @@ import Button from 'grommet/components/Button';
 class ChannelTile extends Component {
     render() {
         const channel = this.props.item;
+
+        let href;
+        let label;
+
+        if (channel.State === 'add') {
+            href = `/api/Channel/AddChannel?channelName=${channel.Name}`;
+            label = 'Hinzufügen';
+        } else {
+            href = `/api/Channel/RemoveChannel?channelName=${channel.Name}`;
+            label = 'Entfernen';
+        }
 
         return (
           <Tile
@@ -20,18 +30,18 @@ class ChannelTile extends Component {
           >
             <Box align="center">
               <Heading tag="h3" align="center" strong>
-                <i class={channel.fontAwesomeIconClass} />
+                <i class={channel.FontAwesomeIconClass} />
               </Heading>
               <Label size="medium">
-                {channel.name}
+                {channel.Name}
               </Label>
               <Box>
                 <Button
-                  label={channel.name}
+                  label={label}
                   primary
                   accent={false}
                   plain={false}
-                  href={`/api/Channel/AddChannel?channelName=${this.props.item.name}`}
+                  href={href}
                 />
               </Box>
             </Box>
@@ -43,7 +53,6 @@ class ChannelTile extends Component {
 ChannelTile.propTypes = {
     editable: PropTypes.bool,
     item: PropTypes.object.isRequired,
-    onClick: PropTypes.func.isRequired,
     selected: PropTypes.bool,
 };
 

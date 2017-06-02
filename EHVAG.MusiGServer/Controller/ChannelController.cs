@@ -54,7 +54,14 @@ namespace EHVAG.MusiGServer.Controller
                                       join token in context.OAuth2Token
                                       on new { key1 = channel.Id, key2 = GoogleId } equals new { key1 = token.ChannelId, key2 = token.UserId } into result
                                       from r in result.DefaultIfEmpty()
-                                      select new { channel, state = (r == null ? "add" : "remove") }).ToArrayAsync();
+                                      select new
+                                      {
+                                          channel.Id,
+                                          channel.Name,
+                                          channel.FontAwesomeIconClass,
+                                          channel.URL,
+                                          State = (r == null ? "add" : "remove")
+                                      }).ToArrayAsync();
 
                 return HttpResponse.Json(JArray.FromObject(channels), HttpStatus.Ok);
             }
