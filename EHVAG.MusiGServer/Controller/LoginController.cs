@@ -6,6 +6,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using EHVAG.MusiGModel;
 using System.Linq;
+using System;
 
 namespace EHVAG.MusiGServer.Controller
 {
@@ -38,25 +39,35 @@ namespace EHVAG.MusiGServer.Controller
                     {
                         using (MusiGDBContext context = new MusiGDBContext())
                         {
-                            using (var transaction = context.Database.BeginTransaction())
+                            try
                             {
-                                // The sub field is the users unique Google Id
-                                string sub = responseJson.Sub;
-                                if (!context.GoogleUser.Any(u => u.Sub == sub))
+                                using (var transaction = context.Database.BeginTransaction())
                                 {
-                                    // Create new user
-                                    GoogleUser user = responseJson;
-                                    user.Sub = sub;
+                                    // The sub field is the users unique Google Id
+                                    string sub = responseJson.Sub;
+                                    if (!context.GoogleUser.Any(u => u.Sub == sub))
+                                    {
+                                        // Create new user
+                                        GoogleUser user = responseJson;
+                                        user.Sub = sub;
 
-                                    context.GoogleUser.Add(user);
+                                        context.GoogleUser.Add(user);
 
-                                    await context.SaveChangesAsync();
-                                    transaction.Commit();
+                                        await context.SaveChangesAsync();
+                                        transaction.Commit();
+                                    }
+
+                                    var signatureString = Session.SignSession(sub);
+                                    return Redirect("/").SetCookie(Session.GoogleIdHeader, sub, false)
+                                                        .SetCookie(Session.AuthHeader, signatureString, true);
                                 }
-
-                                var signatureString = Session.SignSession(sub);
-                                return Redirect("/").SetCookie(Session.GoogleIdHeader, sub, false)
-                                                    .SetCookie(Session.AuthHeader, signatureString, true);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine($"Exception: ${e.Message}");
+                                if (e.InnerException != null)
+                                    Console.WriteLine($"Exception: ${e.InnerException}");
+                                Console.WriteLine($"Exception: ${e.StackTrace}");
                             }
                         }
                     }

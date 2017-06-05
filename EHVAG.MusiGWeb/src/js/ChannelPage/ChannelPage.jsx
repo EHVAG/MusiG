@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import Header from 'grommet/components/Header';
 import Title from 'grommet/components/Title';
 import Search from 'grommet/components/Search';
@@ -26,7 +27,7 @@ class ChannelPage extends React.Component {
         }
 
         return (
-          <Box appCentered="false">
+          <Box appCentered={false}>
             <Header size="large" pad={{ horizontal: 'medium' }}>
               <Title responsive={false}>
                 <span>Kanäle</span>
@@ -52,4 +53,4 @@ const mapDispatchToProps = {
     onFetchChannels: fetchChannels,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChannelPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ChannelPage));

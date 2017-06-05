@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-const fakeAuth = { isAuthenticated: true };
+import PropTypes from 'prop-types';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
-    {...rest}
+    path={rest.path}
     render={props =>
-      (fakeAuth.isAuthenticated
+      (rest.isAuthenticated
         ? <Component {...props} />
         : <Redirect
           to={{
@@ -19,10 +18,23 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
+PrivateRoute.propTypes = {
+    isAuthenticated: PropTypes.bool.isRequired,
+    location: React.PropTypes.shape({
+        pathname: React.PropTypes.string.isRequired,
+    }),
+};
+
+PrivateRoute.defaultProps = {
+    location: {
+        pathname: '',
+    },
+};
+
 function mapStateToProps(store) {
     return {
-        isAuthenticated: store.googleLogin,
+        isAuthenticated: store.googleLogin.isAuthenticated,
     };
 }
 
-export default connect(mapStateToProps)(PrivateRoute);
+export default withRouter(connect(mapStateToProps)(PrivateRoute));

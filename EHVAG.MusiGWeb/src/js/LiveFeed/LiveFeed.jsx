@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
 
-const LiveFeed = React.createClass({
+class LiveFeed extends Component {
     render() {
         return (
           <div>
@@ -13,7 +13,7 @@ const LiveFeed = React.createClass({
             />
           </div>
         );
-    },
-});
+    }
+}
 
 export default LiveFeed;

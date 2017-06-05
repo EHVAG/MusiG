@@ -17,6 +17,7 @@
     "grommet": "^1.0.0",
     "history": "^4.6.1",
     "node-sass": "^3.8.0",
+    "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-google-login": "^2.8.9",

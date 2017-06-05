@@ -20,7 +20,6 @@ export default class SidebarNav extends React.Component {
             <Menu fill primary>
               <Anchor path="/" label="Live Feed" />
               <Anchor path="/channel" label="Kanäle" />
-              <Anchor path="/login" label="Login" />
             </Menu>
             <Footer pad={{ horizontal: 'medium', vertical: 'small' }}>
               <CloudIcon />

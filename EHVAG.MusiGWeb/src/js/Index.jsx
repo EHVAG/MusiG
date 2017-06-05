@@ -1,26 +1,26 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, BrowserRouter, Route } from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
+import store from './Store';
+import '../scss/index.scss';
 import MusiG from './MusiG/Index';
 import LiveFeed from './LiveFeed/LiveFeed';
 import ChannelPage from './ChannelPage/ChannelPage';
 import LoginPage from './GoogleLoginPage/GoogleLoginPage';
-import store from './Store';
-import PrivateRoute from './PrivateRoute';
-import '../scss/index.scss';
 
 render(
   <Provider store={store}>
-    <BrowserRouter>
+    <HashRouter>
       <div>
         <MusiG>
-          <Route exact path="/" component={LiveFeed} />
-          <Route exact path="/channel" component={ChannelPage} />
+          <PrivateRoute exact path="/" component={LiveFeed} />
+          <PrivateRoute exact path="/channel" component={ChannelPage} />
+          <Route exact path="/login" component={LoginPage} />
         </MusiG>
-        <Route exact path="/login" component={LoginPage} />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   </Provider>,
   document.getElementById('content'),
 );
