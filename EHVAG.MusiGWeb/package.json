@@ -49,8 +49,9 @@
   },
   "scripts": {
     "dev": "webpack-dev-server --content-base public --inline --hot",
+    "test": "echo \"No tests\"",
     "pretest": "npm run lint",
-    "lint": "eslint . --ext .json .md"
+    "lint": "eslint . --ext .json --ext .md"
   },
   "author": "",
   "license": "ISC"
