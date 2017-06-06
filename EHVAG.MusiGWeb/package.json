@@ -36,18 +36,22 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
-    "eslint": "^3.13.0",
+    "eslint": "^3.19.0",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-config-google": "^0.7.1",
     "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-json": "^1.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-markdown": "^1.0.0-beta.6",
     "eslint-plugin-react": "^6.9.0",
     "react-google-login": "^2.8.9",
     "webpack": "^1.14.0"
   },
   "scripts": {
     "dev": "webpack-dev-server --content-base public --inline --hot",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"No tests\"",
+    "pretest": "npm run lint",
+    "lint": "eslint . --ext .json .md"
   },
   "author": "",
   "license": "ISC"

@@ -3,13 +3,24 @@
     "plugins": [
         "react",
         "jsx-a11y",
-        "import"
+        "import",
+        "json",
+        "markdown"
     ],
     "rules": {
-        "linebreak-style": ["error", "windows"],
-        "eol-last": ["error", "never"],
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "eol-last": [
+            "error",
+            "never"
+        ],
         "react/no-unknown-property": "off",
-        "indent": ["error", 4]
+        "indent": [
+            "error",
+            4
+        ]
     },
     "parserOptions": {
         "ecmaFeatures": {
