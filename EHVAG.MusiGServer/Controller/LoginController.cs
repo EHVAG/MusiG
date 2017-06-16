@@ -31,7 +31,7 @@ namespace EHVAG.MusiGServer.Controller
 
                     // Verify IdToken against Google endpoint
                     // More details: https://developers.google.com/identity/sign-in/web/backend-auth#calling-the-tokeninfo-endpoint
-                    var response = await client.PostAsync(@"https://www.googleapis.com/oauth2/v3/tokeninfo", new FormUrlEncodedContent(values));
+                    var response = await client.PostAsync(YouTubeClientSecret.TokenInfo, new FormUrlEncodedContent(values));
                     var responseJson = JsonConvert.DeserializeObject<GoogleUser>(await response.Content.ReadAsStringAsync());
 
                     // Check if request was successful and if our Google ClientId matches with the one in the response

@@ -6,6 +6,8 @@
         public static string ProjectId { get; set; }
         public static string AuthUri { get; set; }
         public static string TokenUri { get; set; }
+        public static string TokenInfo { get; set; }
+        public static string TokenRevokeUri { get; set; }
         public static string AuthProviderX509CertUrl { get; set; }
         public static string ClientSecret { get; set; }
         public static string RedirectUris { get; set; }

@@ -36,6 +36,7 @@ namespace EHVAG.MusiGModel
         public string Azp { get; set; }
 
         [Key]
+        [JsonProperty("aud")]
         public string Aud { get; set; }
 
         [JsonProperty("iat")]

@@ -13,9 +13,9 @@ namespace EHVAG.MusiGServer
         {
             var server = new HttpServer(new IPEndPoint(IPAddress.Loopback, 1337), typeof(Program).Assembly);
 
-            #if DEBUG
-                HttpResponse.InsecureMode_DoNotUseThisInProduction = true;
-            #endif
+#if DEBUG
+            HttpResponse.InsecureMode_DoNotUseThisInProduction = true;
+#endif
 
             try
             {
@@ -45,6 +45,8 @@ namespace EHVAG.MusiGServer
             YouTubeClientSecret.ClientId = googleClientSecrets.web.client_id;
             YouTubeClientSecret.ProjectId = googleClientSecrets.web.project_id;
             YouTubeClientSecret.TokenUri = googleClientSecrets.web.token_uri;
+            YouTubeClientSecret.TokenRevokeUri = googleClientSecrets.web.token_revoke_uri;
+            YouTubeClientSecret.TokenInfo = googleClientSecrets.web.token_info;
             YouTubeClientSecret.AuthProviderX509CertUrl = googleClientSecrets.web.auth_provider_x509_cert_url;
             YouTubeClientSecret.ClientSecret = googleClientSecrets.web.client_secret;
             YouTubeClientSecret.RedirectUris = googleClientSecrets.web.redirect_uris[0];

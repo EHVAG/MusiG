@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Net.Http;
 
 namespace EHVAG.MusiGServer.Controller
 {
@@ -25,14 +26,63 @@ namespace EHVAG.MusiGServer.Controller
         }
 
         // https://developers.google.com/identity/protocols/OAuth2InstalledApp#tokenrevoke
-        public HttpResponse RemoveChannel(string channelName, string userId)
+        public void RemoveChannel(string channelName)
         {
             switch (channelName)
             {
-                case "YouTube": return Redirect(GetYouTubeAuthUri());
-                case "SoundCloud": return Redirect("");
-                default: return Redirect(StaticPages.BadRequest);
+                case "YouTube":
+                    RevokeOAuth2Token(Channels.YouTube);
+                    break;
+
+                    //case "SoundCloud": return Redirect("");
+                    //default: return Redirect(StaticPages.BadRequest);
             }
+        }
+
+        private async void RevokeOAuth2Token(Channels channel)
+        {
+            // TODO
+            // Transaction
+            // Result handling
+            // Refactor so we can make it more universal
+
+            // Get User Token
+            using (MusiGDBContext context = new MusiGDBContext())
+            {
+                var token = await (from tokens in context.OAuth2Token
+                                   where tokens.ChannelId == channel
+                                   && tokens.UserId == this.GoogleId
+                                   select tokens.AccessToken).FirstOrDefaultAsync();
+
+                if (!string.IsNullOrEmpty(token))
+                {
+                    //curl - H "Content-type:application/x-www-form-urlencoded" \
+                    using (HttpClient client = new HttpClient())
+                    using (HttpResponseMessage response = await client.GetAsync($"{YouTubeClientSecret.TokenRevokeUri}?token={token}"))
+
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                        }
+                        else
+                        {
+                            using (HttpContent content = response.Content)
+                            {
+                                string result = await content.ReadAsStringAsync();
+
+                                // What to do with result?
+                            }
+                        }
+                }
+                else
+                {
+                    //No token
+                }
+            }
+
+            //YouTubeClientSecret.TokenRevokeUri
+            //https://accounts.google.com/o/oauth2/revoke?token={token}
+
+            //this.GoogleId
         }
 
         private string GetYouTubeAuthUri()
