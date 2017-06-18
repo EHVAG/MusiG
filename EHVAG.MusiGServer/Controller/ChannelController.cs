@@ -39,50 +39,55 @@ namespace EHVAG.MusiGServer.Controller
             }
         }
 
-        private async void RevokeOAuth2Token(Channels channel)
+        // https://developers.google.com/identity/protocols/OAuth2WebServer#tokenrevoke
+        private async Task<HttpResponse> RevokeOAuth2Token(Channels channel)
         {
-            // TODO
-            // Transaction
-            // Result handling
-            // Refactor so we can make it more universal
-
-            // Get User Token
+            // Get the users OAuth2 token
             using (MusiGDBContext context = new MusiGDBContext())
             {
-                var token = await (from tokens in context.OAuth2Token
-                                   where tokens.ChannelId == channel
-                                   && tokens.UserId == this.GoogleId
-                                   select tokens.AccessToken).FirstOrDefaultAsync();
-
-                if (!string.IsNullOrEmpty(token))
+                using (var transaction = context.Database.BeginTransaction())
                 {
-                    //curl - H "Content-type:application/x-www-form-urlencoded" \
-                    using (HttpClient client = new HttpClient())
-                    using (HttpResponseMessage response = await client.GetAsync($"{YouTubeClientSecret.TokenRevokeUri}?token={token}"))
+                    try
+                    {
+                        var oAuth2Token = await (from token in context.OAuth2Token
+                                                 where token.ChannelId == channel
+                                                 && token.UserId == this.GoogleId
+                                                 select token).FirstOrDefaultAsync();
 
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        if (oAuth2Token != null)
                         {
+                            // Send the token to Google
+                            using (HttpClient client = new HttpClient())
+                            using (HttpResponseMessage response = await client.GetAsync($"{YouTubeClientSecret.TokenRevokeUri}?token={oAuth2Token.AccessToken}"))
+
+                            // Everything is fine. Access is revoked. Remove token from our database
+                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                            {
+                                context.OAuth2Token.Remove(oAuth2Token);
+                                transaction.Commit();
+                                return Redirect("/channel");
+                            }
+                            else
+                            {
+                                using (HttpContent content = response.Content)
+                                {
+                                    string result = await content.ReadAsStringAsync();
+                                    return Redirect(StaticPages.InternalServerError);
+                                }
+                            }
                         }
                         else
                         {
-                            using (HttpContent content = response.Content)
-                            {
-                                string result = await content.ReadAsStringAsync();
-
-                                // What to do with result?
-                            }
+                            return Redirect(StaticPages.BadRequest);
                         }
-                }
-                else
-                {
-                    //No token
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        return Redirect(StaticPages.InternalServerError);
+                    }
                 }
             }
-
-            //YouTubeClientSecret.TokenRevokeUri
-            //https://accounts.google.com/o/oauth2/revoke?token={token}
-
-            //this.GoogleId
         }
 
         private string GetYouTubeAuthUri()
