@@ -8,7 +8,7 @@ namespace EHVAG.MusiGServer
 {
     public class Authenticated
     {
-        protected string GoogleId { get; set; }
+        protected string GoogleUserId { get; set; }
         protected string AuthCookie { get; set; }
 
         [Middleware]
@@ -48,8 +48,8 @@ namespace EHVAG.MusiGServer
                         }
                     }
 
-                    // Save the users GoogleId for future API calls.
-                    GoogleId = storedMessage.Substring(0, index);
+                    // Save the users GoogleUserId for future API calls.
+                    GoogleUserId = storedMessage.Substring(0, index);
 
                     // Every check passed.
                     return null;

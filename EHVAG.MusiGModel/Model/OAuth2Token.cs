@@ -9,9 +9,11 @@ namespace EHVAG.MusiGModel
         [Key]
         [Column(Order = 1)]
         public Channels ChannelId { get; set; }
+
         [Key]
         [Column(Order = 2)]
-        public string UserId { get; set; }
+        public string GoogleUserId { get; set; }
+
         public string AccessToken { get; set; }
         public string TokenType { get; set; }
         public string RefreshToken { get; set; }
@@ -19,6 +21,9 @@ namespace EHVAG.MusiGModel
 
         // Navigation properties and relations
         public virtual Channel Channel { get; set; }
-        public virtual GoogleUser GoogleUser { get; set; }
+
+        // Setting foreign key attribute because PK name in GoogleUser is not within the EF naming conventions
+        [ForeignKey("GoogleUserId")]
+        public GoogleUser GoogleUser { get; set; }
     }
 }

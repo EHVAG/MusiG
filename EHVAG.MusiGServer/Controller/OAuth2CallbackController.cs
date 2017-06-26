@@ -14,6 +14,7 @@ namespace EHVAG.MusiGServer.Controller
     [Controller]
     public class OAuth2CallbackController : Authenticated
     {
+        // https://developers.google.com/youtube/v3/guides/auth/server-side-web-apps#handlingresponse
         public async Task<HttpResponse> YouTubeResponse(string code = null, string error = null)
         {
             // Check for bad requests
@@ -23,7 +24,7 @@ namespace EHVAG.MusiGServer.Controller
             // User gave us no access
             // TODO: We need a redirect and message
             if (!string.IsNullOrEmpty(error))
-                return Redirect("/channel");
+                return Redirect(StaticPages.Channel);
 
             JObject responseJson;
             using (var client = new HttpClient())
@@ -38,6 +39,7 @@ namespace EHVAG.MusiGServer.Controller
                 };
 
                 // Exchange AuthCode for AccessToken and RefreshToken
+                // https://developers.google.com/youtube/v3/guides/auth/server-side-web-apps#exchange-authorization-code
                 var response = await client.PostAsync(YouTubeClientSecret.TokenUri, new FormUrlEncodedContent(values));
                 responseJson = JObject.Parse(await response.Content.ReadAsStringAsync());
             }
@@ -48,7 +50,7 @@ namespace EHVAG.MusiGServer.Controller
                 {
                     // Check if user has already a valid Token.
                     // This could be the case if the user manually calls this controller.
-                    if (!await OAuth2TokenFind(context, this.GoogleId, Channels.YouTube))
+                    if (!await OAuth2TokenFind(context, this.GoogleUserId, Channels.YouTube))
                     {
                         using (var transaction = context.Database.BeginTransaction())
                         {
@@ -57,7 +59,7 @@ namespace EHVAG.MusiGServer.Controller
                                 context.OAuth2Token.Add(new OAuth2Token
                                 {
                                     ChannelId = Channels.YouTube,
-                                    UserId = this.GoogleId,
+                                    GoogleUserId = this.GoogleUserId,
                                     AccessToken = responseJson["access_token"].ToString(),
                                     TokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(Convert.ToDouble(responseJson["expires_in"].ToString())),
                                     TokenType = responseJson["token_type"].ToString()
@@ -81,7 +83,7 @@ namespace EHVAG.MusiGServer.Controller
                     }
                 }
                 // TODO: Add Redirect with meaningfull message
-                return Redirect("/channel");
+                return Redirect(StaticPages.Channel);
             }
             // If we get here; Something went wrong. Present answer from the Google server. Google knows what's up.
             return Json(responseJson, HttpStatus.InternalServerError);
@@ -92,7 +94,7 @@ namespace EHVAG.MusiGServer.Controller
             return await (from token in context.OAuth2Token
                           from channel in context.Channel
                           where token.ChannelId == channel.Id
-                          && token.UserId == userId
+                          && token.GoogleUserId == userId
                           select token).AnyAsync();
         }
     }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
+using EHVAG.MusiGServer.Helper;
 
 namespace EHVAG.MusiGServer.Controller
 {
@@ -20,27 +21,22 @@ namespace EHVAG.MusiGServer.Controller
             switch (channelName)
             {
                 case "YouTube": return Redirect(GetYouTubeAuthUri());
-                case "SoundCloud": return Redirect("");
-                default: return Redirect(StaticPages.BadRequest);
+                default: return Redirect(StaticPages.Channel);
             }
         }
 
         // https://developers.google.com/identity/protocols/OAuth2InstalledApp#tokenrevoke
-        public void RemoveChannel(string channelName)
+        public async Task<HttpResponse> RemoveChannel(string channelName)
         {
             switch (channelName)
             {
-                case "YouTube":
-                    RevokeOAuth2Token(Channels.YouTube);
-                    break;
-
-                    //case "SoundCloud": return Redirect("");
-                    //default: return Redirect(StaticPages.BadRequest);
+                case "YouTube": return await RevokeOAuth2TokenAsync(Channels.YouTube);
+                default: return Redirect(StaticPages.Channel);
             }
         }
 
         // https://developers.google.com/identity/protocols/OAuth2WebServer#tokenrevoke
-        private async Task<HttpResponse> RevokeOAuth2Token(Channels channel)
+        private async Task<HttpResponse> RevokeOAuth2TokenAsync(Channels channel)
         {
             // Get the users OAuth2 token
             using (MusiGDBContext context = new MusiGDBContext())
@@ -51,7 +47,7 @@ namespace EHVAG.MusiGServer.Controller
                     {
                         var oAuth2Token = await (from token in context.OAuth2Token
                                                  where token.ChannelId == channel
-                                                 && token.UserId == this.GoogleId
+                                                 && token.GoogleUserId == this.GoogleUserId
                                                  select token).FirstOrDefaultAsync();
 
                         if (oAuth2Token != null)
@@ -60,21 +56,22 @@ namespace EHVAG.MusiGServer.Controller
                             using (HttpClient client = new HttpClient())
                             using (HttpResponseMessage response = await client.GetAsync($"{YouTubeClientSecret.TokenRevokeUri}?token={oAuth2Token.AccessToken}"))
 
-                            // Everything is fine. Access is revoked. Remove token from our database
-                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                            {
-                                context.OAuth2Token.Remove(oAuth2Token);
-                                transaction.Commit();
-                                return Redirect("/channel");
-                            }
-                            else
-                            {
-                                using (HttpContent content = response.Content)
+                                // Everything is fine. Access is revoked. Remove token from our database
+                                if (response.StatusCode == System.Net.HttpStatusCode.OK)
                                 {
-                                    string result = await content.ReadAsStringAsync();
-                                    return Redirect(StaticPages.InternalServerError);
+                                    context.OAuth2Token.Remove(oAuth2Token);
+                                    await context.SaveChangesAsync();
+                                    transaction.Commit();
+                                    return Redirect(StaticPages.Channel);
                                 }
-                            }
+                                else
+                                {
+                                    using (HttpContent content = response.Content)
+                                    {
+                                        string result = await content.ReadAsStringAsync();
+                                        return Redirect(StaticPages.InternalServerError);
+                                    }
+                                }
                         }
                         else
                         {
@@ -103,22 +100,30 @@ namespace EHVAG.MusiGServer.Controller
 
         public async Task<HttpResponse> GetChannels()
         {
-            using (var context = new MusiGDBContext())
+            try
             {
-                var channels = await (from channel in context.Channel
-                                      join token in context.OAuth2Token
-                                      on new { key1 = channel.Id, key2 = GoogleId } equals new { key1 = token.ChannelId, key2 = token.UserId } into result
-                                      from r in result.DefaultIfEmpty()
-                                      select new
-                                      {
-                                          channel.Id,
-                                          channel.Name,
-                                          channel.FontAwesomeIconClass,
-                                          channel.URL,
-                                          State = (r == null ? "add" : "remove")
-                                      }).ToArrayAsync();
+                using (var context = new MusiGDBContext())
+                {
+                    var channels = await (from channel in context.Channel
+                                          join token in context.OAuth2Token
+                                          on new { key1 = channel.Id, key2 = GoogleUserId } equals new { key1 = token.ChannelId, key2 = token.GoogleUserId } into result
+                                          from r in result.DefaultIfEmpty()
+                                          select new
+                                          {
+                                              channel.Id,
+                                              channel.Name,
+                                              channel.FontAwesomeIconClass,
+                                              channel.URL,
+                                              State = (r == null ? "add" : "remove")
+                                          }).ToArrayAsync();
 
-                return HttpResponse.Json(JArray.FromObject(channels), HttpStatus.Ok);
+                    return HttpResponse.Json(JArray.FromObject(channels), HttpStatus.Ok);
+                }
+            }
+            catch (Exception e)
+            {
+                Util.PrintException(e);
+                return Redirect(StaticPages.InternalServerError);
             }
         }
     }

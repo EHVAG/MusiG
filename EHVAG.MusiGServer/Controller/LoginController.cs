@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using EHVAG.MusiGModel;
 using System.Linq;
 using System;
+using EHVAG.MusiGServer.Helper;
 
 namespace EHVAG.MusiGServer.Controller
 {
@@ -64,10 +65,8 @@ namespace EHVAG.MusiGServer.Controller
                             }
                             catch (Exception e)
                             {
-                                Console.WriteLine($"Exception: ${e.Message}");
-                                if (e.InnerException != null)
-                                    Console.WriteLine($"Exception: ${e.InnerException}");
-                                Console.WriteLine($"Exception: ${e.StackTrace}");
+                                Util.PrintException(e);
+                                return Redirect(StaticPages.InternalServerError);
                             }
                         }
                     }
