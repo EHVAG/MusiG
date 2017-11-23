@@ -9,14 +9,13 @@ namespace EHVAG.MusiGServer
 {
     internal class Program
     {
-        private static int Main(string[] args)
+        private static int Main()
         {
             var server = new HttpServer(new IPEndPoint(IPAddress.Loopback, 1337), typeof(Program).Assembly);
 
 #if DEBUG
             HttpResponse.InsecureMode_DoNotUseThisInProduction = true;
 #endif
-
             try
             {
                 PopulateYouTubeClientSecrets();
@@ -31,6 +30,10 @@ namespace EHVAG.MusiGServer
                 Console.ReadLine();
                 return -1;
             }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Server sucessfully started and serving on port {0:}", server.Endpoint.Port);
+            Console.ResetColor();
 
             server.Run().Wait();
             return 0;
